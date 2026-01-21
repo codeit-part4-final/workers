@@ -1,7 +1,9 @@
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL!;
+import { BASE_URL, TEAM_ID } from './config';
 
 export function fetchApi(path: string, options: RequestInit = {}) {
-  return fetch(`${BASE_URL}${path}`, {
+  const url = `${BASE_URL}/${TEAM_ID}${path}`;
+
+  return fetch(url, {
     ...options,
     headers: {
       'Content-Type': 'application/json',
