@@ -43,4 +43,5 @@ next-env.d.ts
 
 
 # personal doc
+.documents/*
 .documents/daily-report.md
