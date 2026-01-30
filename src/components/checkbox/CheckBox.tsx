@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import Image from 'next/image';
-import type { ChangeEvent, CSSProperties } from 'react';
+import type { ChangeEvent, CSSProperties, KeyboardEvent, MouseEvent } from 'react';
 
 import styles from './styles/CheckBox.module.css';
 import { CHECKBOX_STYLE } from './constants/styleConstants';
@@ -28,10 +28,9 @@ export default function CheckBox({
   options,
   onCheckedChange,
 }: CheckBoxProps) {
-  const hasLabel =
-    label !== null && label !== undefined && (typeof label !== 'string' || label.trim().length > 0);
+  const hasLabel = label != null && (typeof label !== 'string' || label.trim() !== '');
   const isReadOnly = options?.readOnly || !onCheckedChange;
-  const isDisabled = disabled || isReadOnly;
+  const isDisabled = disabled;
   const iconSrc = checked
     ? CHECKBOX_STYLE.icons.checked[size]
     : CHECKBOX_STYLE.icons.unchecked[size];
@@ -50,7 +49,23 @@ export default function CheckBox({
     <Image className={styles.icon} src={iconSrc} alt="" width={boxSize} height={boxSize} />
   );
 
+  const handleClick = (event: MouseEvent<HTMLInputElement>) => {
+    if (isReadOnly) {
+      event.preventDefault();
+    }
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (isReadOnly && (event.key === ' ' || event.key === 'Enter')) {
+      event.preventDefault();
+    }
+  };
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (isReadOnly || isDisabled) {
+      event.preventDefault();
+      return;
+    }
     onCheckedChange?.(event.target.checked);
   };
 
@@ -68,12 +83,14 @@ export default function CheckBox({
         type="checkbox"
         checked={checked}
         aria-label={inputAriaLabel}
+        aria-disabled={isReadOnly || isDisabled ? true : undefined}
         id={id}
         name={name}
         value={value}
         disabled={isDisabled}
+        onClick={handleClick}
+        onKeyDown={handleKeyDown}
         onChange={handleChange}
-        readOnly={isReadOnly}
       />
       <span className={styles.box} aria-hidden="true">
         {iconNode}
