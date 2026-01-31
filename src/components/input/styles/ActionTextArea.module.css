@@ -1,0 +1,26 @@
+.wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.textarea {
+  min-height: auto;
+  padding-right: 56px;
+  overflow-y: hidden;
+}
+
+.action {
+  position: absolute;
+  right: 16px;
+  bottom: 12px;
+  display: flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+
+.action:disabled {
+  cursor: default;
+}

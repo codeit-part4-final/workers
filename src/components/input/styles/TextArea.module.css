@@ -1,0 +1,20 @@
+.textarea {
+  width: 100%;
+  min-height: 75px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 12px 16px;
+  background: #ffffff;
+  font-family: var(--font-pretendard), 'Pretendard', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: #0f172a;
+  outline: none;
+  resize: none;
+  overflow-y: auto;
+}
+
+.textarea::placeholder {
+  color: #64748b;
+}

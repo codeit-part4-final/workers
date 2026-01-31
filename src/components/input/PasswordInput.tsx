@@ -1,27 +1,19 @@
 'use client';
 
-import { ComponentPropsWithRef, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 import Input from './Input';
+import { PasswordInputProps } from './types/types';
 import visibilityTrue from '@/assets/icons/visibility/visibillityTrue.svg';
 import visibilityFalse from '@/assets/icons/visibility/visibillityFalse.svg';
-import styles from './PasswordInput.module.css';
-
-type PasswordInputProps = Omit<ComponentPropsWithRef<'input'>, 'type'>;
+import styles from './styles/PasswordInput.module.css';
 
 /**
- * 비밀번호 Input 컴포넌트 (Molecule)
- *
- * - Input(Atom) + 눈 아이콘 토글 조합
- * - 눈 아이콘 클릭으로 비밀번호 표시/숨김 전환
- * - type은 내부에서 관리하므로 별도로 넘기지 않습니다.
- *
- * @example
- * <PasswordInput placeholder="비밀번호를 입력해 주세요." />
- *
- * // react-hook-form 연동
- * <PasswordInput {...register('password')} placeholder="비밀번호를 입력해 주세요." />
+ * 비밀번호 Input 컴포넌트.
+ * @param className 추가 CSS 클래스
+ * @param ref 외부에서 전달하는 ref (react-hook-form 등)
+ * @param props 네이티브 input의 모든 속성(type 제외)
  */
 export default function PasswordInput({ className, ref, ...props }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);

@@ -1,0 +1,29 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-family: var(--font-pretendard), 'Pretendard', sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #0f172a;
+}
+
+.readOnly {
+  background: #f1f5f9;
+  color: #94a3b8;
+}
+
+.buttonArea {
+  display: flex;
+}
