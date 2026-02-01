@@ -1,15 +1,15 @@
 import { ReactNode } from 'react';
 
-export interface ModalProps {
+interface BaseModalProps {
   isOpen: boolean;
   onClose: () => void;
   children?: ReactNode;
-
-  ariaLabel: string;
-  ariaLabelledby?: string;
   ariaDescribedby?: string;
-
   className?: string;
   closeOnOverlayClick?: boolean;
   closeOnEscape?: boolean;
 }
+
+export type ModalProps =
+  | (BaseModalProps & { ariaLabel: string; ariaLabelledby?: never })
+  | (BaseModalProps & { ariaLabel?: never; ariaLabelledby: string });
