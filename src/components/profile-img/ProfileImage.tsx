@@ -1,37 +1,29 @@
 'use client';
 
 /**
- * ProfileImage Component
+ * ProfileImage Component (Atomic)
  *
+ * - 파일 선택은 onChange로 상위에 전달
  *
- * Props 요약
+ * Props
  * @param src             표시할 이미지 URL (없으면 fallback)
- * @param variant         'profile' | 'team' (마스크 배경색/기본 fallback 분기)
- * @param size            'xl' | 'lg' | 'md' | 'sm' | 'xs' (기본 스펙 프리셋)
+ * @param variant         'profile' | 'team' (fallback 분기)
+ * @param size            'xl' | 'lg' | 'md' | 'sm' | 'xs'
  * @param responsiveSize  브레이크포인트별 size 오버라이드 (선택)
  * @param responsiveSpec  브레이크포인트별 box/image px 직접 지정 (선택)
- * @param radius          'r8' | 'r12' | 'r20' | 'r32' (컨테이너/마스크/이미지 동일 적용)
+ * @param radius          'r8' | 'r12' | 'r20' | 'r32'
  *
  * @param editable        true면 input(file) 활성화 + edit 버튼 표시 가능
- * @param showEditButton  edit 버튼 자체 표시 여부 (default true)
+ * @param showEditButton  edit 버튼 표시 여부 (default true)
  * @param clickToEdit     showEditButton=false일 때 avatar 클릭으로 업로드 열기 (선택)
  *
  * @param showBorder      보더 표시 제어 (undefined=기본: xl/lg만 2px, true=항상 2px, false=없음)
  *
- * @param enableApi       true면 업로드 -> PATCH까지 실행 (default true)
- * @param authHeaders     토큰 기반 인증 헤더를 상위에서 주입 (upload + patch 둘 다 사용)
- *                        예) { Authorization: `Bearer ${token}` }
- * @param uploadHeaders   (하위호환) 업로드에만 붙일 헤더. authHeaders와 병합됨.
+ * @param onFileChange    파일 선택 시 상위로 File 전달 (API는 상위에서 처리)
  *
- * @param priority        above-the-fold일 때 true로 주면 LCP warning 줄어듦 (next/image)
+ * @param priority        above-the-fold일 때 true (next/image)
  * @param alt             이미지 alt
  * @param className       wrapper 클래스 추가
- *
- * 추가:
- * @param teamGroupId     variant='team'일 때 PATCH /groups/{id} 호출에 필요한 그룹 id
- * @param onError         업로드/패치 실패 시 상위에서 토스트 등 처리할 수 있게 콜백 제공
- *
- * - fetchApi는 JSON 전용(Content-Type 강제)이라 업로드(multipart)는 fetch로 유지
  */
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -47,9 +39,6 @@ import PencilSmall from '@/assets/buttons/edit/editButtonSmall.svg';
 
 import TeamDefault from '@/assets/icons/img/img.svg';
 
-import { fetchApi } from '@/shared/apis/fetchApi';
-import { BASE_URL, TEAM_ID } from '@/shared/apis/config';
-
 export type ProfileImageSize = 'xl' | 'lg' | 'md' | 'sm' | 'xs';
 export type ProfileImageVariant = 'profile' | 'team';
 export type ProfileImageRadius = 'r8' | 'r12' | 'r20' | 'r32';
@@ -58,8 +47,6 @@ type Breakpoint = 'base' | 'sm' | 'md' | 'lg' | 'xl';
 type SizeSpec = { box: number; image: number };
 type ResponsiveSize = Partial<Record<Breakpoint, ProfileImageSize>>;
 type ResponsiveSpec = Partial<Record<Breakpoint, SizeSpec>>;
-
-type ErrorStage = 'upload' | 'patch-profile' | 'patch-team';
 
 export type ProfileImageProps = {
   src?: string | null;
@@ -75,19 +62,7 @@ export type ProfileImageProps = {
 
   showBorder?: boolean;
 
-  enableApi?: boolean;
-
-  /** variant='team'에서 그룹 이미지 PATCH에 필요한 groupId */
-  teamGroupId?: number;
-
-  /** 업로드/패치 실패 시 상위에서 처리 (토스트 등) */
-  onError?: (error: unknown, ctx: { stage: ErrorStage }) => void;
-
-  /** 업로드 + PATCH 공용 인증 헤더(권장) */
-  authHeaders?: HeadersInit;
-
-  /** (하위 호환) 업로드 전용 헤더 */
-  uploadHeaders?: HeadersInit;
+  onFileChange?: (file: File) => void;
 
   priority?: boolean;
   alt?: string;
@@ -201,11 +176,7 @@ export default function ProfileImage({
   showEditButton = true,
   clickToEdit,
   showBorder,
-  enableApi = true,
-  teamGroupId,
-  onError,
-  authHeaders,
-  uploadHeaders,
+  onFileChange,
   priority = false,
   alt = 'profile image',
   className,
@@ -263,87 +234,12 @@ export default function ProfileImage({
     [editable, shouldClickToEdit, handleEditClick],
   );
 
-  const mergedUploadHeaders = useMemo<HeadersInit | undefined>(() => {
-    if (!authHeaders && !uploadHeaders) return undefined;
-
-    const h = new Headers();
-
-    if (authHeaders) {
-      const a = new Headers(authHeaders);
-      a.forEach((v, k) => h.set(k, v));
-    }
-    if (uploadHeaders) {
-      const u = new Headers(uploadHeaders);
-      u.forEach((v, k) => h.set(k, v));
-    }
-
-    return h;
-  }, [authHeaders, uploadHeaders]);
-
-  const uploadImage = useCallback(
-    async (file: File) => {
-      if (!BASE_URL) throw new Error('NEXT_PUBLIC_API_BASE_URL is missing');
-
-      const formData = new FormData();
-      formData.append('image', file);
-
-      const res = await fetch(`${BASE_URL}/${TEAM_ID}/images/upload`, {
-        method: 'POST',
-        body: formData,
-        headers: mergedUploadHeaders,
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`upload failed ${res.status}: ${text}`);
-      }
-
-      const data = (await res.json()) as { url: string };
-      return data.url;
-    },
-    [mergedUploadHeaders],
-  );
-
-  const patchProfileImage = useCallback(
-    async (url: string) => {
-      const res = await fetchApi('/user', {
-        method: 'PATCH',
-        body: JSON.stringify({ image: url }),
-        headers: authHeaders,
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`patch profile failed ${res.status}: ${text}`);
-      }
-    },
-    [authHeaders],
-  );
-
-  const patchTeamImage = useCallback(
-    async (url: string, groupId: number) => {
-      const res = await fetchApi(`/groups/${groupId}`, {
-        method: 'PATCH',
-        body: JSON.stringify({ image: url }),
-        headers: authHeaders,
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`patch team failed ${res.status}: ${text}`);
-      }
-    },
-    [authHeaders],
-  );
-
   const handleFileChange = useCallback(
-    async (e: ChangeEvent<HTMLInputElement>) => {
+    (e: ChangeEvent<HTMLInputElement>) => {
       const file = e.target.files?.[0];
       if (!file) return;
 
       setErroredSrc(null);
-
-      const prevPreview = previewUrl;
 
       // local preview
       const localUrl = URL.createObjectURL(file);
@@ -352,52 +248,11 @@ export default function ProfileImage({
         return localUrl;
       });
 
-      if (enableApi) {
-        try {
-          const url = await uploadImage(file);
-
-          if (variant === 'team') {
-            if (!teamGroupId) {
-              throw new Error('teamGroupId is required when variant="team" and enableApi=true');
-            }
-            await patchTeamImage(url, teamGroupId);
-          } else {
-            await patchProfileImage(url);
-          }
-
-          // 서버 url로 교체
-          setPreviewUrl((prev) => {
-            if (prev?.startsWith('blob:')) URL.revokeObjectURL(prev);
-            return url;
-          });
-        } catch (err) {
-          // 실패 시 사용자가 "바뀐 줄" 착각하지 않게 되돌림
-          setPreviewUrl(prevPreview ?? null);
-
-          const stage: ErrorStage =
-            err instanceof Error && err.message.includes('upload failed')
-              ? 'upload'
-              : variant === 'team'
-                ? 'patch-team'
-                : 'patch-profile';
-
-          onError?.(err, { stage });
-          console.error(err);
-        }
-      }
+      onFileChange?.(file);
 
       e.target.value = '';
     },
-    [
-      enableApi,
-      uploadImage,
-      patchProfileImage,
-      patchTeamImage,
-      variant,
-      teamGroupId,
-      onError,
-      previewUrl,
-    ],
+    [onFileChange],
   );
 
   const styleVars = useMemo(() => {
