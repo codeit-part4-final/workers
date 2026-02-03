@@ -1,7 +1,7 @@
 import checkedLarge from '@/assets/icons/check/checkedLarge.svg';
 import checkedSmall from '@/assets/icons/check/checkedSmall.svg';
-import nonCheckedLarge from '@/assets/icons/check/nonChekcedLarge.svg';
-import nonCheckedSmall from '@/assets/icons/check/nonChekcedSmall.svg';
+import nonCheckedLarge from '@/assets/icons/check/nonCheckedLarge.svg';
+import nonCheckedSmall from '@/assets/icons/check/nonCheckedSmall.svg';
 
 export const CHECKBOX_ICON = {
   checked: {
