@@ -1,0 +1,43 @@
+.track {
+  width: 100%;
+  max-width: 322px;
+  height: 20px;
+
+  border-radius: 9999px;
+  overflow: hidden;
+  position: relative;
+
+  background:
+    repeating-linear-gradient(
+      -45deg,
+      rgba(0, 0, 0, 0.04) 0px,
+      rgba(0, 0, 0, 0.04) 40px,
+      rgba(255, 255, 255, 0.7) 10px,
+      rgba(255, 255, 255, 0.7) 80px
+    ),
+    #eef2f7;
+}
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: #5189fa;
+
+
+  transition: width var(--pb-duration, 800ms) ease;
+  will-change: width;
+}
+
+@media (min-width: 744px) {
+  .track {
+    max-width: 566px;
+    height: 27px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .track {
+    max-width: 1010px;
+    height: 27px;
+  }
+}
