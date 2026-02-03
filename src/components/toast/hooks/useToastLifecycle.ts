@@ -56,7 +56,7 @@ export default function useToastLifecycle({
         });
       }
 
-      if ((isOpening || isRendered) && !isClosing && autoDismissMs > 0) {
+      if (isRendered && !isClosing && autoDismissMs > 0) {
         clearTimers();
         autoTimerRef.current = window.setTimeout(startDismiss, autoDismissMs);
       }
