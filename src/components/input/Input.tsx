@@ -6,9 +6,9 @@ import { InputProps } from './types/types';
 import styles from './styles/Input.module.css';
 
 /**
- * 공통 Input 컴포넌트.
- * @param className 추가 CSS 클래스
- * @param props 네이티브 input의 모든 속성(placeholder, type, onChange 등)
+ * 범용 텍스트 입력 컴포넌트.
+ * 네이티브 `<input>`의 모든 속성을 지원하며, errorMessage를 전달하면
+ * 빨간 테두리 + 하단 에러 텍스트가 자동으로 표시됩니다.
  */
 export default function Input({ className, errorMessage, isError, ...props }: InputProps) {
   const hasError = isError || !!errorMessage;

@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import Image from 'next/image';
 import clsx from 'clsx';
 import TextArea from './TextArea';
@@ -10,12 +10,9 @@ import arrowInactive from '@/assets/buttons/arrow/arrowUpNonActivedButton.svg';
 import styles from './styles/ActionTextArea.module.css';
 
 /**
- * 전송 버튼이 포함된 텍스트 입력 기본 컴포넌트.
- * 입력값이 있으면 전송 버튼이 활성화된다.
- * @param onSubmit 전송 버튼 클릭 시 호출되는 콜백
- * @param wrapperClassName wrapper div에 적용할 추가 CSS 클래스
- * @param className TextArea에 적용할 추가 CSS 클래스
- * @param props 네이티브 textarea의 모든 속성
+ * 전송 버튼이 포함된 텍스트 입력 컴포넌트.
+ * 텍스트를 입력하면 전송 버튼이 활성화되고, 높이가 내용에 맞게 자동 조절됩니다.
+ * CommentInput의 기반 컴포넌트로, 단독으로도 사용할 수 있습니다.
  */
 export default function ActionTextArea({
   onSubmit,
@@ -27,22 +24,23 @@ export default function ActionTextArea({
   const [hasValue, setHasValue] = useState(false);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  const autoResize = useCallback(() => {
-    const el = textareaRef.current;
-    if (!el) return;
-    el.style.height = 'auto';
-    el.style.height = `${el.scrollHeight}px`;
-  }, []);
-
   return (
-    <div className={clsx(styles.wrapper, wrapperClassName)}>
+    <div
+      className={clsx(styles.wrapper, wrapperClassName)}
+      role="group"
+      aria-label="텍스트 입력 및 전송"
+    >
       <TextArea
         ref={textareaRef}
         rows={1}
         className={clsx(styles.textarea, className)}
         onChange={(e) => {
           setHasValue(e.target.value.length > 0);
-          autoResize();
+          const el = textareaRef.current;
+          if (el) {
+            el.style.height = 'auto';
+            el.style.height = `${el.scrollHeight}px`;
+          }
           onChange?.(e);
         }}
         {...props}

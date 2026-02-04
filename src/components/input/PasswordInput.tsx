@@ -10,9 +10,9 @@ import visibilityFalse from '@/assets/icons/visibility/visibillityFalse.svg';
 import styles from './styles/PasswordInput.module.css';
 
 /**
- * 비밀번호 Input 컴포넌트.
- * @param className 추가 CSS 클래스
- * @param props 네이티브 input의 모든 속성(type 제외)
+ * 비밀번호 전용 입력 컴포넌트.
+ * 우측 눈 아이콘으로 비밀번호 표시/숨기기를 토글할 수 있습니다.
+ * 복사 방지가 기본 적용되어 있으며, errorMessage 전달 시 에러 상태를 표시합니다.
  */
 export default function PasswordInput({ className, errorMessage, ...props }: PasswordInputProps) {
   const [showPassword, setShowPassword] = useState(false);
