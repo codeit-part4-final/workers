@@ -1,0 +1,9 @@
+.wrapper {
+  border-top: 1px solid var(--color-background-tertiary);
+  border-bottom: 1px solid var(--color-background-tertiary);
+}
+
+.textarea {
+  border: none;
+  border-radius: 0;
+}
