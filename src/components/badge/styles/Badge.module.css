@@ -1,0 +1,34 @@
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  background-color: var(--color-background-inverse);
+}
+
+.large {
+  padding: 4px 10px 4px 6px;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.small {
+  padding: 2px 8px 2px 4px;
+  gap: 3px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.done,
+.ongoing {
+  color: var(--color-icon-brand);
+}
+
+.empty {
+  color: var(--color-text-disabled);
+}
+
+.icon {
+  display: block;
+  flex-shrink: 0;
+}
