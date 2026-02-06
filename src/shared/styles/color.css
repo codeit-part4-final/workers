@@ -14,7 +14,7 @@
   --color-point-yellow: #eab308;
 
   /* Background */
-  --color-background-primary: #0f172a;
+  --color-background-primary: #ffffff;
   --color-background-secondary: #f1f5f9;
   --color-background-tertiary: #e2e8f0;
   --color-background-inverse: #ffffff;
@@ -37,6 +37,8 @@
 
   /* Status */
   --color-status-danger: #fc4b4b;
+  --color-status-danger-hover: #e53e3e;
+  --color-status-danger-pressed: #c53030;
 
   /* Icon */
   --color-icon-primary: #64748b;

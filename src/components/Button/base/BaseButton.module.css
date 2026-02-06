@@ -1,0 +1,88 @@
+.base {
+  display: flex;
+  width: 100%;
+  font-weight: 600;
+}
+
+/* ==============================
+   Size
+   ============================== */
+
+.default {
+  height: 48px;
+  padding: 0 20px; /* ✅ 기본 버튼 좌우 여백 */
+  border-radius: 12px;
+  font-size: 16px;
+}
+
+.small {
+  height: 33px;
+  padding: 0 12px; /* ✅ 작은 버튼 좌우 여백 (시안 느낌) */
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* ==============================
+   Variant
+   ============================== */
+
+/* primary */
+.primary {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--color-interaction-hover);
+}
+
+.primary:active:not(:disabled) {
+  background-color: var(--color-interaction-pressed);
+}
+
+.primary:disabled {
+  background-color: var(--color-interaction-inactive);
+  color: var(--color-text-inverse);
+}
+
+/* outline */
+.outline {
+  background-color: transparent;
+  color: var(--color-brand-primary);
+  border: 1.5px solid var(--color-brand-primary);
+}
+
+.outline:hover:not(:disabled) {
+  background-color: var(--color-brand-secondary);
+}
+
+.outline:active:not(:disabled) {
+  background-color: var(--color-brand-secondary);
+  border-color: var(--color-interaction-pressed);
+  color: var(--color-interaction-pressed);
+}
+
+.outline:disabled {
+  background-color: transparent;
+  border-color: var(--color-interaction-inactive);
+  color: var(--color-interaction-inactive);
+}
+
+/* danger */
+.danger {
+  background-color: var(--color-status-danger);
+  color: var(--color-text-inverse);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: var(--color-status-danger-hover);
+}
+
+.danger:active:not(:disabled) {
+  background-color: var(--color-status-danger-pressed);
+}
+
+.danger:disabled {
+  background-color: var(--color-interaction-inactive);
+  color: var(--color-text-inverse);
+}

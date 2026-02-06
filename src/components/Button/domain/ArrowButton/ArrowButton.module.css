@@ -1,0 +1,49 @@
+.button {
+  border: none;
+  background: none;
+  padding: 0;
+  appearance: none;
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transition:
+    transform 0.15s ease,
+    opacity 0.15s ease;
+}
+
+.button:hover {
+  opacity: 0.8;
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.large {
+  width: 32px;
+  height: 32px;
+}
+
+.small {
+  width: 16px;
+  height: 16px;
+}
+
+.icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,115 @@
+/* ==============================
+   Root
+   ============================== */
+
+.root {
+  display: inline-flex;
+  width: max-content;
+
+  /* height 33px를 padding+border 포함해서 정확히 맞추기 */
+  box-sizing: border-box;
+
+  height: 33px;
+  padding: 8px 12px;
+  gap: 4px;
+
+  border-radius: 8px;
+  border: 1px solid var(--color-brand-primary);
+
+  background-color: transparent;
+  color: var(--color-brand-primary);
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ==============================
+   Text & Border states
+   ============================== */
+
+.root:hover:not(:disabled) {
+  color: var(--color-interaction-hover);
+  border-color: var(--color-interaction-hover);
+}
+
+.root:active:not(:disabled) {
+  color: var(--color-interaction-pressed);
+  border-color: var(--color-interaction-pressed);
+}
+
+.root:disabled {
+  color: var(--color-interaction-inactive);
+  border-color: var(--color-interaction-inactive);
+}
+
+/* ==============================
+   Icon wrapper
+   ============================== */
+
+.icon {
+  position: relative;
+  display: inline-flex;
+  width: 16px;
+  height: 16px;
+  flex: 0 0 16px;
+}
+
+/* 모든 아이콘을 겹쳐두고 기본은 숨김 */
+.icon img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+
+/* ==============================
+   Icon states (중요: 선언 순서)
+   ============================== */
+
+/* default */
+.icon .iconPrimary {
+  opacity: 1;
+}
+
+/* hover */
+.root:hover:not(:disabled) .iconPrimary {
+  opacity: 0;
+}
+.root:hover:not(:disabled) .iconHover {
+  opacity: 1;
+}
+
+/* pressed (hover보다 우선) */
+.root:active:not(:disabled) .iconPrimary {
+  opacity: 0;
+}
+.root:active:not(:disabled) .iconHover {
+  opacity: 0;
+}
+.root:active:not(:disabled) .iconPressed {
+  opacity: 1;
+}
+
+/* disabled (최우선) */
+.root:disabled .iconPrimary {
+  opacity: 0;
+}
+.root:disabled .iconHover {
+  opacity: 0;
+}
+.root:disabled .iconPressed {
+  opacity: 0;
+}
+.root:disabled .iconInactive {
+  opacity: 1;
+}
+
+/* ==============================
+   Label
+   ============================== */
+
+.label {
+  display: inline-block;
+  white-space: nowrap;
+}

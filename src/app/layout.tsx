@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import '@/shared/styles/color.css';
 import './globals.css';
 
 import { pretendard } from '@/shared/styles/font';

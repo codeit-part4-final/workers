@@ -1,0 +1,68 @@
+.button {
+  /* Reset */
+  border: none;
+  background: none;
+  padding: 0;
+  appearance: none;
+  cursor: pointer;
+
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 48px;
+  border-radius: 12px;
+
+  /* Typography */
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+
+  /* Default (미선택) */
+  background: var(--color-background-primary);
+  border: 1px solid var(--color-border-primary);
+  color: var(--color-text-primary);
+
+  /* Transition */
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.15s ease;
+}
+
+/* Selected (선택됨) */
+.button.selected {
+  background: var(--color-brand-primary);
+  border: 1px solid var(--color-brand-primary);
+  color: var(--color-text-inverse);
+}
+
+/* Hover */
+.button:hover:not(:disabled):not(.selected) {
+  border-color: var(--color-border-secondary);
+  background: var(--color-background-secondary);
+}
+
+.button.selected:hover:not(:disabled) {
+  background: var(--color-interaction-pressed);
+  border-color: var(--color-interaction-pressed);
+}
+
+/* Active */
+.button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Focus */
+.button:focus-visible {
+  outline: 2px solid var(--color-brand-primary);
+  outline-offset: 2px;
+}
+
+/* Disabled */
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}

@@ -1,0 +1,76 @@
+/* FilledRoundButton.module.css */
+.root {
+  height: 40px;
+  border-radius: 40px;
+  padding: 14px 20px 14px 16px;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  display: inline-flex;
+  width: max-content;
+}
+
+/* filled */
+.filled {
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+}
+
+.filled:hover:not(:disabled) {
+  background-color: var(--color-interaction-hover);
+}
+
+.filled:active:not(:disabled) {
+  background-color: var(--color-interaction-pressed);
+}
+
+.filled:disabled {
+  background-color: var(--color-interaction-inactive);
+  color: var(--color-text-inverse);
+}
+
+/* inverse */
+.inverse {
+  background-color: var(--color-background-inverse);
+  color: var(--color-brand-primary);
+  border: 1.5px solid var(--color-brand-primary);
+}
+
+.inverse:hover:not(:disabled) {
+  color: var(--color-interaction-hover);
+  border-color: var(--color-interaction-hover);
+}
+
+.inverse:active:not(:disabled) {
+  color: var(--color-interaction-pressed);
+  border-color: var(--color-interaction-pressed);
+}
+
+.inverse:disabled {
+  color: var(--color-interaction-inactive);
+  border-color: var(--color-interaction-inactive);
+}
+
+/* shadow */
+.shadow {
+  box-shadow: 0 15px 50px -12px rgba(0, 0, 0, 0.05);
+}
+
+/* icon + label */
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+}
+
+.icon img {
+  width: 100%;
+  height: 100%;
+}
+
+.label {
+  display: inline-block;
+  white-space: nowrap;
+}
