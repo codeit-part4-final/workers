@@ -1,0 +1,50 @@
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 238px;
+  height: 36px;
+  padding: 8px 16px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-family: Pretendard, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: var(--color-text-secondary);
+}
+
+.trigger:hover {
+  background: var(--color-brand-secondary);
+}
+
+.selected {
+  color: var(--color-brand-primary);
+  font-weight: 600;
+}
+
+.left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.selected .icon {
+  filter: brightness(0) saturate(100%) invert(45%) sepia(85%) saturate(1500%) hue-rotate(208deg)
+    brightness(102%) contrast(97%);
+}
+
+.arrow {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
