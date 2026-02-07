@@ -2,21 +2,18 @@
 
 import Modal from '../Modal';
 import styles from './LogoutModal.module.css';
+import type { BaseDomainModalProps } from './types';
 
 const TITLE_ID = 'logout-modal-title';
 const DEFAULT_TITLE = '로그아웃 하시겠어요?';
 const DEFAULT_CLOSE_LABEL = '닫기';
 const DEFAULT_CONFIRM_LABEL = '로그아웃';
 
-export interface LogoutModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface LogoutModalProps extends BaseDomainModalProps {
   onConfirm: () => void;
   title?: string;
   closeLabel?: string;
   confirmLabel?: string;
-  closeOnOverlayClick?: boolean;
-  closeOnEscape?: boolean;
 }
 
 export default function LogoutModal({

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Modal from '../Modal';
 import styles from './WarningModal.module.css';
 import alertSmall from '@/assets/icons/alert/alertSmall.svg';
+import type { BaseDomainModalProps } from './types';
 
 const TITLE_ID = 'warning-modal-title';
 const DESCRIPTION_ID = 'warning-modal-description';
@@ -13,16 +14,12 @@ const DEFAULT_DESCRIPTION = '그룹장으로 있는 그룹은 자동으로 삭�
 const DEFAULT_CLOSE_LABEL = '닫기';
 const DEFAULT_CONFIRM_LABEL = '회원 탈퇴';
 
-export interface WarningModalProps {
-  isOpen: boolean;
-  onClose: () => void;
+export interface WarningModalProps extends BaseDomainModalProps {
   onConfirm: () => void;
   title?: string;
   description?: string;
   closeLabel?: string;
   confirmLabel?: string;
-  closeOnOverlayClick?: boolean;
-  closeOnEscape?: boolean;
 }
 
 export default function WarningModal({
