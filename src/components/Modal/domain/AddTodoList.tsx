@@ -51,10 +51,7 @@ export default function AddTodoList({
       closeOnEscape={closeOnEscape}
     >
       <article className={styles.container}>
-        <header className={styles.header}>
-          <h2 id={TITLE_ID} className={styles.title}>
-            {title}
-          </h2>
+        <div className={styles.buttonContainer}>
           <button
             type="button"
             className={styles.closeButton}
@@ -63,6 +60,11 @@ export default function AddTodoList({
           >
             <Image src={xMarkBig} alt="" width={24} height={24} />
           </button>
+        </div>
+        <header className={styles.header}>
+          <h2 id={TITLE_ID} className={styles.title}>
+            {title}
+          </h2>
         </header>
 
         <form className={styles.form} onSubmit={handleSubmit}>
