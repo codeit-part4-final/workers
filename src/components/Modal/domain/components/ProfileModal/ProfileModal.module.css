@@ -1,4 +1,4 @@
-.modalContent.modalContent {
+section > .modalContent {
   width: 344px;
   height: 243px;
   display: inline-flex;
@@ -47,9 +47,9 @@
   cursor: pointer;
 }
 
-.closeButton.closeButton,
-.closeButton.closeButton:hover:not(:disabled),
-.closeButton.closeButton:active:not(:disabled) {
+.container .closeButton,
+.container .closeButton:hover:not(:disabled),
+.container .closeButton:active:not(:disabled) {
   border: none;
   background: transparent;
   color: inherit;
@@ -121,7 +121,7 @@
 }
 
 @media (max-width: 480px) {
-  .modalContent.modalContent {
+  section > .modalContent {
     width: 100%;
     max-width: 375px;
     border-radius: 24px 24px 0 0;

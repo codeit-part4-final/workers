@@ -12,7 +12,7 @@
   text-align: center;
 }
 
-.modalContent.modalContent {
+section > .modalContent {
   border-radius: 24px;
 }
 
@@ -31,9 +31,9 @@
   cursor: pointer;
 }
 
-.closeButton.closeButton,
-.closeButton.closeButton:hover:not(:disabled),
-.closeButton.closeButton:active:not(:disabled) {
+.container .closeButton,
+.container .closeButton:hover:not(:disabled),
+.container .closeButton:active:not(:disabled) {
   border: none;
   background: transparent;
   color: inherit;
@@ -82,7 +82,7 @@
 }
 
 @media (max-width: 480px) {
-  .modalContent.modalContent {
+  section > .modalContent {
     border-radius: 24px 24px 0 0;
   }
 

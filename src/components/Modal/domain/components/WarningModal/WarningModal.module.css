@@ -1,4 +1,4 @@
-.modalContent.modalContent {
+section > .modalContent {
   box-sizing: border-box;
   display: inline-flex;
   width: 384px;
@@ -82,9 +82,9 @@
   cursor: pointer;
 }
 
-.closeButton.closeButton,
-.closeButton.closeButton:hover:not(:disabled),
-.closeButton.closeButton:active:not(:disabled) {
+.actions .closeButton,
+.actions .closeButton:hover:not(:disabled),
+.actions .closeButton:active:not(:disabled) {
   border: 1px solid var(--Border-Secondary, #cbd5e1);
   background: var(--Background-Primary, #fff);
   color: var(--Text-Default, #64748b);
@@ -119,7 +119,7 @@
 }
 
 @media (max-width: 480px) {
-  .modalContent.modalContent {
+  section > .modalContent {
     width: 100%;
     max-width: 375px;
     border-radius: 24px 24px 0 0;

@@ -1,25 +1,19 @@
 'use client';
 
-import type { FormEvent } from 'react';
 import { useId } from 'react';
 
 import Modal from '../../../Modal';
 import BaseButton from '@/components/Button/base/BaseButton';
 import { Input } from '@/components/input';
 import styles from './ChangePassword.module.css';
-import {
-  CONFIRM_PASSWORD_NAME,
-  DEFAULT_CLOSE_LABEL,
-  DEFAULT_CONFIRM_PASSWORD_LABEL,
-  DEFAULT_CONFIRM_PASSWORD_PLACEHOLDER,
-  DEFAULT_NEW_PASSWORD_LABEL,
-  DEFAULT_NEW_PASSWORD_PLACEHOLDER,
-  DEFAULT_SUBMIT_LABEL,
-  DEFAULT_TITLE,
-  NEW_PASSWORD_NAME,
-  TITLE_ID,
-} from './ChangePassword.constants';
+import { CONFIRM_PASSWORD_NAME, NEW_PASSWORD_NAME, TITLE_ID } from './ChangePassword.constants';
 import type { ChangePasswordProps } from './ChangePassword.types';
+import {
+  createSubmitHandler,
+  resolveChangePasswordText,
+  resolveCloseOptions,
+  resolvePasswordInputIds,
+} from './ChangePassword.utils';
 export type { ChangePasswordProps } from './ChangePassword.types';
 
 /**
@@ -38,26 +32,25 @@ export default function ChangePassword({
   input,
   closeOptions,
 }: ChangePasswordProps) {
-  const title = text?.title ?? DEFAULT_TITLE;
-  const newPasswordLabel = text?.newPasswordLabel ?? DEFAULT_NEW_PASSWORD_LABEL;
-  const confirmPasswordLabel = text?.confirmPasswordLabel ?? DEFAULT_CONFIRM_PASSWORD_LABEL;
-  const newPasswordPlaceholder = text?.newPasswordPlaceholder ?? DEFAULT_NEW_PASSWORD_PLACEHOLDER;
-  const confirmPasswordPlaceholder =
-    text?.confirmPasswordPlaceholder ?? DEFAULT_CONFIRM_PASSWORD_PLACEHOLDER;
-  const closeLabel = text?.closeLabel ?? DEFAULT_CLOSE_LABEL;
-  const submitLabel = text?.submitLabel ?? DEFAULT_SUBMIT_LABEL;
-  const closeOnOverlayClick = closeOptions?.overlayClick ?? true;
-  const closeOnEscape = closeOptions?.escape ?? true;
+  const {
+    title,
+    newPasswordLabel,
+    confirmPasswordLabel,
+    newPasswordPlaceholder,
+    confirmPasswordPlaceholder,
+    closeLabel,
+    submitLabel,
+  } = resolveChangePasswordText(text);
+  const { closeOnOverlayClick, closeOnEscape } = resolveCloseOptions(closeOptions);
 
   const generatedNewPasswordId = useId();
   const generatedConfirmPasswordId = useId();
-  const newPasswordId = input?.newPassword?.id ?? generatedNewPasswordId;
-  const confirmPasswordId = input?.confirmPassword?.id ?? generatedConfirmPasswordId;
-
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onSubmit();
-  };
+  const { newPasswordId, confirmPasswordId } = resolvePasswordInputIds(
+    input,
+    generatedNewPasswordId,
+    generatedConfirmPasswordId,
+  );
+  const handleSubmit = createSubmitHandler(onSubmit);
 
   return (
     <Modal
