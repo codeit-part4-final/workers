@@ -1,4 +1,4 @@
-@import '@shared/styles/color.css';
+@import '../../../shared/styles/color.css';
 
 .overlay {
   display: flex;

@@ -1,0 +1,157 @@
+.title {
+  margin: 0;
+  color: var(--Text-Primary, #1e293b);
+  text-align: left;
+  font-family: Pretendard, sans-serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  white-space: nowrap;
+}
+
+.subTitle {
+  color: var(--Color-slate-400, #94a3b8);
+  font-family: Pretendard;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14px;
+}
+
+.subContainer dl,
+.countContainer dl {
+  margin: 0;
+}
+
+.subContainer dd,
+.countContainer dd {
+  margin: 8px 0 0;
+}
+
+.settingButton {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 32px;
+  right: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+}
+
+.percent {
+  color: var(--Color-Brand-Primary, #5189fa);
+  font-family: Pretendard;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 38px;
+  text-transform: uppercase;
+}
+
+.completedNumber {
+  color: var(--Color-blue-400, #5189fa);
+  font-family: Pretendard;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  text-transform: uppercase;
+}
+
+.mainContainer {
+  width: 375px;
+  height: 196px;
+  position: relative;
+  border-radius: 20px;
+  background: var(--Background-Primary, #fff);
+  box-shadow: 0 15px 50px -12px rgba(0, 0, 0, 0.05);
+  padding: 32px 24px 24px 25px;
+}
+
+.subContainer {
+  display: flex;
+  align-items: flex-start;
+  align-self: stretch;
+  justify-content: space-between;
+  margin: 37px 0 16px;
+}
+
+.countContainer {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-left: auto;
+}
+
+.countContainer > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.countContainer dt,
+.countContainer dd {
+  text-align: center;
+}
+
+.line {
+  width: 1px;
+  height: 56px;
+  background: var(--Border-Primary, #e2e8f0);
+}
+
+.taskNumber {
+  color: var(--Text-Default, #64748b);
+  font-family: Pretendard;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 28px;
+  text-transform: uppercase;
+}
+
+.barContainer {
+  display: flex;
+  gap: 16px;
+  margin-left: 0;
+  align-items: center;
+}
+
+.progressBar {
+  flex: 1;
+  max-width: 100%;
+  min-width: 0;
+}
+
+@media (min-width: 744px) {
+  .mainContainer {
+    width: 620px;
+    height: 239px;
+  }
+
+  .countContainer {
+    margin-left: auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  .mainContainer {
+    width: 1120px;
+    height: 239px;
+  }
+
+  .settingButton {
+    position: static;
+  }
+
+  .subContainer {
+    align-items: flex-end;
+    padding-right: 52px;
+  }
+}
