@@ -6,7 +6,10 @@ import { Input } from '@/components/input';
 import { ProfileImage } from '@/components/profile-img';
 import type { CreateTeamFeedback } from '../_interfaces/feedback';
 import FeedbackMessage from './FeedbackMessage';
-import styles from '../page.module.css';
+import pageStyles from '../page.module.css';
+import cardStyles from './CreateTeamCard.module.css';
+import clsx from 'clsx';
+import commonStyles from '../_styles/common.module.css';
 
 const CREATE_TEAM_FEEDBACK_ID = 'create-team-feedback';
 
@@ -31,15 +34,15 @@ export default function CreateTeamCard({
   };
 
   return (
-    <form className={styles.card} onSubmit={handleFormSubmit}>
-      <h2 className={styles.title}>팀 생성하기</h2>
+    <form className={clsx(commonStyles.flexCol, cardStyles.card)} onSubmit={handleFormSubmit}>
+      <h2 className={pageStyles.title}>팀 생성하기</h2>
 
-      <div className={styles.profileSection}>
+      <div className={clsx(commonStyles.flexColCenter, cardStyles.profileSection)}>
         <ProfileImage variant="team" size="xl" editable />
       </div>
 
-      <div className={styles.inputSection}>
-        <label htmlFor="team-name" className={styles.label}>
+      <div className={clsx(commonStyles.flexCol, cardStyles.inputSection)}>
+        <label htmlFor="team-name" className={pageStyles.label}>
           팀 이름
         </label>
         <Input
@@ -48,11 +51,11 @@ export default function CreateTeamCard({
           onChange={(event) => onChange(event.target.value)}
           aria-describedby={CREATE_TEAM_FEEDBACK_ID}
           placeholder="팀 이름을 입력해주세요"
-          className={styles.teamNameInput}
+          className={cardStyles.teamNameInput}
         />
       </div>
 
-      <BaseButton className={styles.submitButton} type="submit" disabled={disabled}>
+      <BaseButton className={cardStyles.submitButton} type="submit" disabled={disabled}>
         생성하기
       </BaseButton>
 

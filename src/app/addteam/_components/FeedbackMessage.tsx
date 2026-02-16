@@ -1,5 +1,5 @@
 import type { CreateTeamFeedback } from '../_interfaces/feedback';
-import styles from '../page.module.css';
+import feedbackMessageStyles from './FeedbackMessage.module.css';
 
 interface FeedbackMessageProps {
   id: string;
@@ -9,7 +9,7 @@ interface FeedbackMessageProps {
 export default function FeedbackMessage({ id, createTeamFeedback }: FeedbackMessageProps) {
   if (!createTeamFeedback) {
     return (
-      <p id={id} className={styles.helperText}>
+      <p id={id} className={feedbackMessageStyles.helperText}>
         팀 이름은 회사명이나 모임 이름 등으로 설정하면 좋아요.
       </p>
     );
@@ -17,14 +17,14 @@ export default function FeedbackMessage({ id, createTeamFeedback }: FeedbackMess
 
   if (createTeamFeedback.type === 'error') {
     return (
-      <p id={id} role="alert" aria-live="assertive" className={styles.errorText}>
+      <p id={id} role="alert" aria-live="assertive" className={feedbackMessageStyles.errorText}>
         {createTeamFeedback.message}
       </p>
     );
   }
 
   return (
-    <p id={id} role="status" aria-live="polite" className={styles.successText}>
+    <p id={id} role="status" aria-live="polite" className={feedbackMessageStyles.successText}>
       {createTeamFeedback.message}
     </p>
   );
