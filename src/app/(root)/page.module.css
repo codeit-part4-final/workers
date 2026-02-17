@@ -1,141 +1,271 @@
-.page {
-  --background: #fafafa;
-  --foreground: #fff;
+/* app/(root)/page.module.css */
 
-  --text-primary: #000;
-  --text-secondary: #666;
-
-  --button-primary-hover: #383838;
-  --button-secondary-hover: #f2f2f2;
-  --button-secondary-border: #ebebeb;
-
+/* ─────────────────────────────────────────
+   페이지 최상위 레이아웃
+   Sidebar(normal flow) + scrollContainer(flex:1)
+   ───────────────────────────────────────── */
+.pageWrapper {
   display: flex;
-  min-height: 100vh;
-  align-items: center;
-  justify-content: center;
-  font-family: var(--font-geist-sans);
-  background-color: var(--background);
+  height: 100vh;
+  overflow: hidden;
 }
 
-.main {
+/* ─────────────────────────────────────────
+   스크롤 컨테이너
+   Sidebar가 flex item으로 공간을 차지하므로
+   margin-left 없이 flex: 1 만으로 나머지 영역 채움
+   ───────────────────────────────────────── */
+.scrollContainer {
+  flex: 1;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+
+  /* 스크롤바 숨기기 (UX — 풀페이지 스크롤에서 스크롤바 노출은 어색함) */
+  scrollbar-width: none;
+}
+
+.scrollContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─────────────────────────────────────────
+   공통 섹션
+   ───────────────────────────────────────── */
+.section {
+  height: 100vh;
+  scroll-snap-align: start;
   display: flex;
-  min-height: 100vh;
-  width: 100%;
-  max-width: 800px;
-  flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   섹션별 배경색
+   ───────────────────────────────────────── */
+.sectionHero {
+  background-color: var(--color-background-secondary);
+  /* 좌측 텍스트와 우측 이미지 배치 */
   justify-content: space-between;
-  background-color: var(--foreground);
-  padding: 120px 60px;
+  padding-left: 80px;
+  /* 우측 이미지가 끝까지 닿도록 padding-right 없음 */
 }
 
-.intro {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  text-align: left;
-  gap: 24px;
+.sectionKanban {
+  background-color: var(--color-slate-50);
+  justify-content: space-between;
+  padding: 0 80px;
+  gap: 40px;
 }
 
-.intro h1 {
-  max-width: 320px;
-  font-size: 40px;
-  font-weight: 600;
-  line-height: 48px;
-  letter-spacing: -2.4px;
-  text-wrap: balance;
-  color: var(--text-primary);
-}
-
-.intro p {
-  max-width: 440px;
-  font-size: 18px;
-  line-height: 32px;
-  text-wrap: balance;
-  color: var(--text-secondary);
-}
-
-.intro a {
-  font-weight: 500;
-  color: var(--text-primary);
-}
-
-.ctas {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  max-width: 440px;
+.sectionCheck {
+  background-color: var(--color-brand-primary);
+  justify-content: space-between;
+  padding: 0 40px;
   gap: 16px;
-  font-size: 14px;
 }
 
-.ctas a {
-  display: flex;
+.sectionComment {
+  background-color: var(--color-slate-50);
+  justify-content: space-between;
+  padding: 0 80px;
+  gap: 40px;
+}
+
+.sectionCta {
+  background-color: var(--color-background-primary);
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 40px;
-  padding: 0 16px;
-  border-radius: 128px;
-  border: 1px solid transparent;
-  transition: 0.2s;
-  cursor: pointer;
-  width: fit-content;
-  font-weight: 500;
+  text-align: center;
+  gap: 24px;
+  padding: 0 80px;
 }
 
-a.primary {
-  background: var(--text-primary);
-  color: var(--background);
+/* ─────────────────────────────────────────
+   Hero 섹션
+   ───────────────────────────────────────── */
+/* 좌측 전체 컬럼
+   space-around로 아이콘/텍스트그룹/버튼 사이 여백 균등 분배
+   별도 margin 없이 세 요소가 자연스럽게 위아래로 퍼짐 */
+.heroContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-self: stretch;
+  padding: 0;
+  flex-shrink: 0;
+  gap: 12px;
+}
+
+/* 아이콘 + 텍스트 그룹 */
+.heroTopGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 서브타이틀 + 타이틀을 묶는 그룹 */
+.heroTextGroup {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+  padding-left: 26px;
 }
 
-a.secondary {
-  border-color: var(--button-secondary-border);
+.heroButtonWrapper {
+  padding-left: 26px;
 }
 
-/* Enable hover only on non-touch devices */
-@media (hover: hover) and (pointer: fine) {
-  a.primary:hover {
-    background: var(--button-primary-hover);
-    border-color: transparent;
-  }
-
-  a.secondary:hover {
-    background: var(--button-secondary-hover);
-    border-color: transparent;
-  }
+.heroSubtitle {
+  font-size: 18px;
+  font-weight: 400;
+  color: var(--color-text-default);
+  margin: 0;
 }
 
-@media (max-width: 600px) {
-  .main {
-    padding: 48px 24px;
-  }
-
-  .intro {
-    gap: 16px;
-  }
-
-  .intro h1 {
-    font-size: 32px;
-    line-height: 40px;
-    letter-spacing: -1.92px;
-  }
+.heroTitle {
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  margin: 0;
+  line-height: 1.1;
 }
 
-@media (prefers-color-scheme: dark) {
-  .logo {
-    filter: invert();
-  }
+/* 우측 이미지: 우측 끝에 붙어서 크게 보임
+   피그마 시안처럼 이미지가 화면 오른쪽에 꽉 차게 */
+.heroImageWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  align-self: stretch;
+  overflow: hidden;
+}
 
-  .page {
-    --background: #000;
-    --foreground: #000;
+.heroImage {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  object-fit: cover;
+  object-position: left center;
+}
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+/* ─────────────────────────────────────────
+   Split Text 애니메이션
+   단어 단위 span이 inline으로 흘러가도록
+   ───────────────────────────────────────── */
+.splitWord {
+  display: inline;
+}
 
-    --button-primary-hover: #ccc;
-    --button-secondary-hover: #1a1a1a;
-    --button-secondary-border: #1a1a1a;
-  }
+/* ─────────────────────────────────────────
+   섹션 텍스트 블록 (섹션 2, 3, 4 공통)
+   ───────────────────────────────────────── */
+.sectionTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 440px;
+  flex-shrink: 0;
+}
+
+/* 섹션 2, 4 — 상단 정렬 modifier */
+.sectionTextBlockTop {
+  align-self: flex-start;
+  padding-top: 192px;
+}
+
+/* 섹션 3 — 세로 중앙 정렬 modifier */
+.sectionTextBlockCenter {
+  align-self: center;
+  justify-content: center;
+}
+
+.sectionTitle {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* 파란 배경 섹션(섹션 3)에서 텍스트 색상 반전 */
+.sectionTitleInverse {
+  color: var(--color-text-inverse);
+}
+
+.sectionDescription {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-default);
+  margin: 0;
+  line-height: 1.6;
+}
+
+.sectionDescriptionInverse {
+  color: var(--color-text-inverse);
+  opacity: 0.85;
+}
+
+/* ─────────────────────────────────────────
+   섹션 이미지 (섹션 2, 3, 4 공통)
+   ───────────────────────────────────────── */
+.sectionImageWrapper {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center; /* 기본: 중앙 */
+  min-width: 0;
+}
+
+/* 섹션 3 — 이미지 하단 정렬, 살짝 잘리는 형태
+   !important로 기본 align-items: center를 명시적으로 덮어씀 */
+.sectionImageWrapperBottom {
+  align-items: flex-end !important;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────
+   CTA 섹션
+   ───────────────────────────────────────── */
+.ctaSubtitle {
+  font-size: 16px;
+  color: var(--color-text-default);
+  margin: 0;
+}
+
+.ctaTitle {
+  font-size: 48px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+/* ─────────────────────────────────────────
+   Link 기본 스타일 초기화
+   <Link>가 <BaseButton>을 감쌀 때 밑줄 제거
+   ───────────────────────────────────────── */
+.linkReset {
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ─────────────────────────────────────────
+   로그인 프로필 이미지 (Sidebar profileImage 슬롯)
+   원형으로 표시
+   ───────────────────────────────────────── */
+.loginImage {
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* 섹션 3 이미지 — SVG 투명 하단 여백 -80px으로 보정 */
+.sectionCheckImage {
+  width: 85%;
+  height: auto;
+  margin-bottom: -80px;
 }
