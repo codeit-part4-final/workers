@@ -183,6 +183,11 @@
   justify-content: center;
 }
 
+/* 섹션 4 — 텍스트 영역 넓게 */
+.sectionTextBlockWide {
+  max-width: 520px;
+}
+
 .sectionTitle {
   font-size: 40px;
   font-weight: 700;
@@ -220,12 +225,11 @@
   min-width: 0;
 }
 
-/* 섹션 3 — 이미지 하단 정렬, 살짝 잘리는 형태
-   !important로 기본 align-items: center를 명시적으로 덮어씀 */
+/* 섹션 3, 4 — 이미지 하단 정렬 */
 .sectionImageWrapperBottom {
   align-items: flex-end !important;
-  align-self: stretch;
   overflow: hidden;
+  height: 100vh;
 }
 
 /* ─────────────────────────────────────────
@@ -254,6 +258,11 @@
   display: inline-block;
 }
 
+/* CTA 섹션 버튼 너비 고정 */
+.ctaButton {
+  width: 160px;
+}
+
 /* ─────────────────────────────────────────
    로그인 프로필 이미지 (Sidebar profileImage 슬롯)
    원형으로 표시
@@ -268,4 +277,19 @@
   width: 85%;
   height: auto;
   margin-bottom: -80px;
+}
+
+/* 섹션 4 이미지 — 하단 정렬, 천장 닿지 않도록 max-height 제한 */
+.sectionCommentImage {
+  width: 100%;
+  height: auto;
+  max-height: 100vh;
+  object-fit: contain;
+  object-position: bottom;
+}
+
+/* 섹션 5 CTA — 전체 높이 대신 콘텐츠 높이만큼만 */
+.sectionCtaAuto {
+  height: auto;
+  min-height: 360px;
 }

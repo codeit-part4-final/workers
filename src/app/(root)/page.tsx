@@ -199,7 +199,9 @@ export default function LandingPage() {
 
         {/* 섹션 4 — 댓글/공유 */}
         <section className={`${styles.section} ${styles.sectionComment}`}>
-          <div className={`${styles.sectionTextBlock} ${styles.sectionTextBlockTop}`}>
+          <div
+            className={`${styles.sectionTextBlock} ${styles.sectionTextBlockTop} ${styles.sectionTextBlockWide}`}
+          >
             <FadeUpBlock>
               <Image src={gradationMessage} alt="" width={48} height={48} />
             </FadeUpBlock>
@@ -218,7 +220,7 @@ export default function LandingPage() {
           </div>
 
           <motion.div
-            className={styles.sectionImageWrapper}
+            className={`${styles.sectionImageWrapper} ${styles.sectionImageWrapperBottom}`}
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.2, duration: 0.7, ease: 'easeOut' }}
@@ -228,13 +230,13 @@ export default function LandingPage() {
               alt="댓글 및 공유 화면"
               width={860}
               height={560}
-              style={{ width: '100%', height: 'auto' }}
+              className={styles.sectionCommentImage}
             />
           </motion.div>
         </section>
 
         {/* 섹션 5 — CTA */}
-        <section className={`${styles.section} ${styles.sectionCta}`}>
+        <section className={`${styles.section} ${styles.sectionCta} ${styles.sectionCtaAuto}`}>
           <FadeUpBlock delay={0.1}>
             <p className={styles.ctaSubtitle}>
               팀원 모두와 같은 방향, 같은 속도로 나아가는 가장 쉬운 방법
@@ -247,7 +249,9 @@ export default function LandingPage() {
 
           <FadeUpBlock delay={0.4}>
             <Link href="/login" className={styles.linkReset}>
-              <BaseButton size="default">지금 시작하기</BaseButton>
+              <BaseButton size="default" className={styles.ctaButton}>
+                지금 시작하기
+              </BaseButton>
             </Link>
           </FadeUpBlock>
         </section>
