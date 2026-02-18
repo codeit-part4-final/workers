@@ -2,11 +2,11 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import CreateTeamCard from '../_components/CreateTeamCard';
-import { CREATE_TEAM_MESSAGES } from '../_constants/createTeam';
-import { useCreateTeam } from '../_hooks/useCreateTeam';
-import { getCreateTeamFailureMessage } from '../_utils/getCreateTeamFailureMessage';
-import type { CreateTeamFeedback } from '../_interfaces/feedback';
+import CreateTeamCard from '../_domain/components/CreateTeamCard';
+import { CREATE_TEAM_MESSAGES } from '../_domain/constants/createTeam';
+import { useCreateTeam } from '../_domain/hooks/useCreateTeam';
+import { getCreateTeamFailureMessage } from '../_domain/utils/getCreateTeamFailureMessage';
+import type { CreateTeamFeedback } from '../_domain/interfaces/feedback';
 
 export default function CreateTeamPage() {
   const [teamName, setTeamName] = useState('');

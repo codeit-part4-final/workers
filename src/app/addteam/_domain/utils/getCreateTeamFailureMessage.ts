@@ -1,4 +1,4 @@
-import { CREATE_TEAM_MESSAGES } from '../_constants/createTeam';
+import { CREATE_TEAM_MESSAGES } from '../constants/createTeam';
 
 const DUPLICATED_STATUS = 'status: 409';
 const INVALID_REQUEST_STATUS = 'status: 400';

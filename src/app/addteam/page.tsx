@@ -1,4 +1,4 @@
-import NoTeamState from './_components/NoTeamState';
+import NoTeamState from './_domain/components/NoTeamState';
 
 export default function AddTeamPage() {
   return <NoTeamState />;

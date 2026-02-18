@@ -2,10 +2,9 @@
 
 import { BaseButton } from '@/components/Button/base';
 import { Input } from '@/components/input';
-import pageStyles from '../page.module.css';
 import joinCardStyles from './JoinTeamCard.module.css';
 import clsx from 'clsx';
-import commonStyles from '../_styles/common.module.css';
+import commonStyles from '../styles/common.module.css';
 
 interface JoinTeamCardProps {
   teamLink: string;
@@ -17,10 +16,10 @@ export default function JoinTeamCard({ teamLink, onTeamLinkChange }: JoinTeamCar
 
   return (
     <div className={clsx(commonStyles.flexColCenter, joinCardStyles.joinCard)}>
-      <h2 className={pageStyles.title}>팀 참여하기</h2>
+      <h2 className={joinCardStyles.title}>팀 참여하기</h2>
 
       <div className={clsx(commonStyles.flexCol, joinCardStyles.joinInputSection)}>
-        <label htmlFor="team-link" className={pageStyles.joinLabel}>
+        <label htmlFor="team-link" className={joinCardStyles.joinLabel}>
           팀 링크
         </label>
         <Input

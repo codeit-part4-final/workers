@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import JoinTeamCard from '../_components/JoinTeamCard';
+import JoinTeamCard from '../_domain/components/JoinTeamCard';
 
 export default function JoinTeamPage() {
   const [teamLink, setTeamLink] = useState('');

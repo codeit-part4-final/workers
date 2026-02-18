@@ -1,3 +1,19 @@
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 28px;
+}
+
+.joinLabel {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 19px;
+}
+
 .joinCard {
   position: relative;
   display: inline-flex;
@@ -51,8 +67,12 @@
     gap: 8px;
   }
 
+  .title {
+    font-size: 20px;
+    line-height: 24px;
+  }
+
   .joinLabel {
-    /* Note: This was in page.module.css and was not moved earlier. I should be careful not to move it here again if it's shared. */
     font-size: 14px;
     line-height: 17px;
   }

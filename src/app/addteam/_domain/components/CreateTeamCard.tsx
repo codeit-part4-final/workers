@@ -4,12 +4,11 @@ import { type FormEvent } from 'react';
 import { BaseButton } from '@/components/Button/base';
 import { Input } from '@/components/input';
 import { ProfileImage } from '@/components/profile-img';
-import type { CreateTeamFeedback } from '../_interfaces/feedback';
+import type { CreateTeamFeedback } from '../interfaces/feedback';
 import FeedbackMessage from './FeedbackMessage';
-import pageStyles from '../page.module.css';
 import cardStyles from './CreateTeamCard.module.css';
 import clsx from 'clsx';
-import commonStyles from '../_styles/common.module.css';
+import commonStyles from '../styles/common.module.css';
 
 const CREATE_TEAM_FEEDBACK_ID = 'create-team-feedback';
 
@@ -35,14 +34,14 @@ export default function CreateTeamCard({
 
   return (
     <form className={clsx(commonStyles.flexCol, cardStyles.card)} onSubmit={handleFormSubmit}>
-      <h2 className={pageStyles.title}>팀 생성하기</h2>
+      <h2 className={cardStyles.title}>팀 생성하기</h2>
 
       <div className={clsx(commonStyles.flexColCenter, cardStyles.profileSection)}>
         <ProfileImage variant="team" size="xl" editable />
       </div>
 
       <div className={clsx(commonStyles.flexCol, cardStyles.inputSection)}>
-        <label htmlFor="team-name" className={pageStyles.label}>
+        <label htmlFor="team-name" className={cardStyles.label}>
           팀 이름
         </label>
         <Input

@@ -2,8 +2,8 @@ import { Group } from '@/shared/apis/groups/types';
 import { useCreateGroupMutation } from '@/shared/queries/groups/useCreateGroupMutation';
 import { groupsKeys } from '@/shared/queries/groups/queryKeys';
 import { QueryClient, useQueryClient } from '@tanstack/react-query';
-import { CREATE_TEAM_MESSAGES } from '../_constants/createTeam';
-import { isDuplicated, normalizeTeamName } from '../_utils/duplicationCalculator';
+import { CREATE_TEAM_MESSAGES } from '../constants/createTeam';
+import { isDuplicated, normalizeTeamName } from '../utils/duplicationCalculator';
 
 function getCachedTeamNames(queryClient: QueryClient) {
   const cachedDetails = queryClient.getQueriesData<Group>({

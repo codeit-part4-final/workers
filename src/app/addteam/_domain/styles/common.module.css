@@ -9,11 +9,6 @@
   align-items: center;
 }
 
-.flexRow {
-  display: flex;
-  flex-direction: row;
-}
-
 .flexCenter {
   display: flex;
   align-items: center;

@@ -1,4 +1,4 @@
-import type { CreateTeamFeedback } from '../_interfaces/feedback';
+import type { CreateTeamFeedback } from '../interfaces/feedback';
 import feedbackMessageStyles from './FeedbackMessage.module.css';
 
 interface FeedbackMessageProps {
