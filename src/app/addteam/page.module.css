@@ -13,27 +13,9 @@
   background: var(--color-background-secondary);
 }
 
-.mobileOnlyHeader {
-  display: none;
-}
-
 .mainContents {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   flex: 1;
   padding: var(--layout-padding-desktop);
-}
-
-.card {
-  display: flex;
-  flex-direction: column;
-  width: var(--create-card-width-desktop);
-  padding: 32px 28px;
-  gap: 20px;
-  border-radius: 24px;
-  box-shadow: 4px 4px 10px 0 #24242440;
-  background-color: var(--color-background-inverse);
 }
 
 .title {
@@ -44,70 +26,12 @@
   line-height: 28px;
 }
 
-.profileSection {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
-
-.inputSection {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
 .label {
   margin: 0;
   color: var(--color-text-secondary);
   font-size: 16px;
   font-weight: 500;
   line-height: 19px;
-}
-
-.helperText {
-  margin: 0;
-  color: var(--color-text-default);
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.errorText {
-  margin: 0;
-  color: var(--color-status-danger);
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.successText {
-  margin: 0;
-  color: var(--color-brand-primary);
-  font-size: 14px;
-  line-height: 1.5;
-  text-align: center;
-}
-
-.joinCard {
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: var(--join-card-width-desktop);
-  height: 400px;
-  padding: 59px 45px 63px;
-  border-radius: 20px;
-  background: var(--color-background-inverse);
-}
-
-.joinInputSection {
-  display: flex;
-  flex-direction: column;
-  width: var(--join-input-width-desktop);
-  margin-top: 40px;
-  gap: 8px;
 }
 
 .joinLabel {
@@ -118,87 +42,9 @@
   line-height: 19px;
 }
 
-.teamLinkInput {
-  width: 100%;
-  height: var(--control-height-desktop);
-}
-
-.joinSubmitButton {
-  width: var(--join-input-width-desktop);
-  height: var(--control-height-desktop);
-  margin-top: 40px;
-  border-radius: 12px;
-}
-
-.joinHelperText {
-  margin: 24px 0 0;
-  color: var(--color-text-default);
-  font-size: 16px;
-  line-height: 19px;
-  text-align: center;
-}
-
-.noTeamState {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: min(90vw, 660px);
-}
-
-.noTeamIllustration {
-  width: min(100%, 660px);
-  height: auto;
-}
-
-.noTeamMessage {
-  margin: 20px 0 0;
-  color: var(--color-text-default);
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 34px;
-  text-align: center;
-}
-
-.noTeamActions {
-  display: flex;
-  flex-direction: column;
-  width: min(100%, 370px);
-  margin-top: 48px;
-  gap: 16px;
-}
-
-.noTeamActionButton {
-  height: var(--control-height-desktop);
-}
-
 @media (max-width: 767px) {
   .page {
     flex-direction: column;
-  }
-
-  .mobileOnlyHeader {
-    display: block;
-    width: 100%;
-    align-self: stretch;
-  }
-
-  .mobileOnlyHeader :global(header) {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    height: 52px;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--color-border-primary, #e2e8f0);
-    background: var(--color-background-inverse);
-  }
-
-  .mobileOnlyHeader :global(header) > div {
-    display: flex;
-    align-items: center;
-    width: 102px;
-    gap: 2px;
-    flex-shrink: 0;
   }
 
   .mainContents {
@@ -206,27 +52,10 @@
     padding: var(--layout-padding-mobile);
   }
 
-  .card {
-    width: var(--create-card-width-mobile);
-    min-height: 464px;
-    padding: 24px 22px;
-    gap: 0;
-    border-radius: 24px;
-  }
-
   .title {
     color: var(--color-text-primary);
     font-size: 20px;
     line-height: 24px;
-  }
-
-  .profileSection {
-    margin-top: 34px;
-  }
-
-  .inputSection {
-    margin-top: 24px;
-    gap: 8px;
   }
 
   .label {
@@ -239,93 +68,5 @@
     color: var(--color-text-default);
     font-size: 12px;
     line-height: 14px;
-  }
-
-  .teamNameInput {
-    height: var(--control-height-mobile);
-    padding: 12px;
-    font-size: 14px;
-    line-height: 17px;
-  }
-
-  .submitButton {
-    margin-top: 40px;
-    height: var(--control-height-mobile);
-    font-size: 14px;
-  }
-
-  .helperText,
-  .errorText,
-  .successText {
-    margin-top: 16px;
-  }
-
-  .joinCard {
-    align-items: stretch;
-    justify-content: flex-start;
-    width: var(--create-card-width-mobile);
-    min-height: 264px;
-    padding: 24px 22px 28px;
-    border-radius: 24px;
-  }
-
-  .joinInputSection {
-    width: 100%;
-    margin-top: 24px;
-    gap: 8px;
-  }
-
-  .joinLabel {
-    font-size: 14px;
-    line-height: 17px;
-  }
-
-  .teamLinkInput {
-    height: var(--control-height-mobile);
-    font-size: 14px;
-    line-height: 17px;
-  }
-
-  .joinSubmitButton {
-    width: 100%;
-    height: var(--control-height-mobile);
-    margin-top: 40px;
-    font-size: 14px;
-    line-height: 17px;
-  }
-
-  .joinHelperText {
-    margin-top: 16px;
-    font-size: 12px;
-    line-height: 14px;
-  }
-
-  .noTeamState {
-    width: 100%;
-    max-width: 343px;
-  }
-
-  .noTeamIllustration {
-    width: min(100%, 343px);
-  }
-
-  .noTeamMessage {
-    margin-top: 16px;
-    color: var(--color-text-default);
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 24px;
-  }
-
-  .noTeamActions {
-    width: 100%;
-    max-width: 343px;
-    margin-top: 40px;
-  }
-
-  .noTeamActionButton {
-    height: var(--control-height-mobile);
-    font-size: 14px;
-    line-height: 17px;
   }
 }
