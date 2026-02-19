@@ -1,0 +1,43 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  gap: 24px;
+  min-height: 100%;
+}
+
+.content {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.kanbanArea {
+  flex: 1;
+  min-width: 0;
+}
+
+.rightPanel {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (max-width: 1280px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .rightPanel {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    padding: 16px;
+    gap: 16px;
+  }
+}
