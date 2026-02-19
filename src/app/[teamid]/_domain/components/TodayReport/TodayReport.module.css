@@ -1,0 +1,58 @@
+.card {
+  width: 1120px;
+  background: var(--color-background-primary);
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.percentRow {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.percent {
+  font-size: 40px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  line-height: 1;
+}
+
+.stats {
+  display: flex;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+  padding: 12px;
+  background: var(--color-background-secondary);
+  border-radius: 12px;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-default);
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
