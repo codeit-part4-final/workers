@@ -1,0 +1,36 @@
+.item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.dragHandle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20px;
+  cursor: grab;
+  color: var(--color-interaction-inactive);
+  font-size: 16px;
+  user-select: none;
+  margin-bottom: 4px;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.item:hover .dragHandle {
+  opacity: 1;
+}
+
+.dragHandle:active {
+  cursor: grabbing;
+}
+
+.dragDots {
+  letter-spacing: 2px;
+}
+
+.todoCard {
+  flex: 1;
+}
