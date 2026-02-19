@@ -1,0 +1,31 @@
+.page {
+  display: flex;
+  min-height: 100vh;
+  background: var(--color-background-secondary);
+}
+
+.mobileOnlyHeader {
+  display: none;
+}
+
+.mainContents {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+@media (max-width: 767px) {
+  .page {
+    flex-direction: column;
+  }
+
+  .mobileOnlyHeader {
+    display: block;
+  }
+
+  .mainContents {
+    width: 100%;
+  }
+}
