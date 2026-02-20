@@ -13,10 +13,23 @@ import gradationFolder from '@/assets/icons/landing/gradation_folder.svg';
 import gradationCheck from '@/assets/icons/landing/gradation_check.svg';
 import gradationMessage from '@/assets/icons/landing/gradation_message.svg';
 
+/* PC 이미지 */
 import landingPC01 from '@/assets/img/landing/pc/landingPC_01.svg';
 import landingPC02 from '@/assets/img/landing/pc/landingPC_02.svg';
 import landingPC03 from '@/assets/img/landing/pc/landingPC_03.svg';
 import landingPC04 from '@/assets/img/landing/pc/landingPC_04.svg';
+
+/* 태블릿 이미지 */
+import landingTablet01 from '@/assets/img/landing/tablet/landingTablet_01.svg';
+import landingTablet02 from '@/assets/img/landing/tablet/landingTablet_02.svg';
+import landingTablet03 from '@/assets/img/landing/tablet/landingTablet_03.svg';
+import landingTablet04 from '@/assets/img/landing/tablet/landingTablet_04.svg';
+
+/* 모바일 이미지 */
+import landingMobile01 from '@/assets/img/landing/mobile/mobileSmall_01.svg';
+import landingMobile02 from '@/assets/img/landing/mobile/mobileSmall_02.svg';
+import landingMobile03 from '@/assets/img/landing/mobile/mobileSmall_03.svg';
+import landingMobile04 from '@/assets/img/landing/mobile/mobileSmall_04.svg';
 
 import styles from './page.module.css';
 
@@ -59,29 +72,30 @@ export default function LandingPage() {
     <div className={styles.pageWrapper}>
       {/*
         ── 좌측 사이드바 ──
-        - profileImage: 접힘/펼침 모두에서 노출 (Sidebar 내부 구현)
-        - profileName: 펼쳤을 때만 노출, 접히면 자동으로 숨겨짐 (Sidebar 내부 AnimatePresence 처리)
+        - 모바일에서는 sidebarWrapper가 display:none 처리
+        - profileImage: 접힘/펼침 모두에서 노출
+        - profileName: 펼쳤을 때만 노출
         - TODO: 팀원에게 profileName 클릭 시 /login 이동 기능 추가 요청 필요
-          현재는 이미지/텍스트 모두 링크 동작 불가 — Sidebar profileName이 span으로만 렌더링됨
       */}
-      <Sidebar
-        profileImage={
-          <Image
-            src={profileImg}
-            alt="로그인"
-            width={32}
-            height={32}
-            className={styles.loginImage}
-          />
-        }
-        profileName="로그인"
-      />
+      <div className={styles.sidebarWrapper}>
+        <Sidebar
+          profileImage={
+            <Image
+              src={profileImg}
+              alt="로그인"
+              width={32}
+              height={32}
+              className={styles.loginImage}
+            />
+          }
+          profileName="로그인"
+        />
+      </div>
 
       {/* ── 스크롤 컨테이너 ── */}
       <main className={styles.scrollContainer}>
         {/* 섹션 1 — Hero */}
         <section className={`${styles.section} ${styles.sectionHero}`}>
-          {/* 좌측: 위쪽(아이콘+텍스트) / 아래쪽(버튼) 분리 */}
           <div className={styles.heroContent}>
             <div className={styles.heroTopGroup}>
               <FadeUpBlock delay={0.1}>
@@ -107,7 +121,7 @@ export default function LandingPage() {
             </FadeUpBlock>
           </div>
 
-          {/* 우측: 이미지를 우측 끝에 크게 배치 */}
+          {/* PC/태블릿/모바일 이미지 — CSS display로 전환 */}
           <motion.div
             className={styles.heroImageWrapper}
             initial={{ opacity: 0, x: 60 }}
@@ -120,7 +134,23 @@ export default function LandingPage() {
               width={900}
               height={650}
               priority
-              className={styles.heroImage}
+              className={`${styles.heroImage} ${styles.heroImagePc}`}
+            />
+            <Image
+              src={landingTablet01}
+              alt="Coworkers 대시보드 화면"
+              width={700}
+              height={500}
+              priority
+              className={`${styles.heroImage} ${styles.heroImageTablet}`}
+            />
+            <Image
+              src={landingMobile01}
+              alt="Coworkers 대시보드 화면"
+              width={340}
+              height={400}
+              priority
+              className={`${styles.heroImage} ${styles.heroImageMobile}`}
             />
           </motion.div>
         </section>
@@ -156,12 +186,26 @@ export default function LandingPage() {
               alt="칸반보드 화면"
               width={860}
               height={560}
-              style={{ width: '100%', height: 'auto' }}
+              className={`${styles.sectionImage} ${styles.sectionImagePc}`}
+            />
+            <Image
+              src={landingTablet02}
+              alt="칸반보드 화면"
+              width={640}
+              height={420}
+              className={`${styles.sectionImage} ${styles.sectionImageTablet}`}
+            />
+            <Image
+              src={landingMobile02}
+              alt="칸반보드 화면"
+              width={320}
+              height={240}
+              className={`${styles.sectionImage} ${styles.sectionImageMobile}`}
             />
           </motion.div>
         </section>
 
-        {/* 섹션 3 — 체크/캘린더 (Brand Primary 배경, 이미지 좌측) */}
+        {/* 섹션 3 — 체크/캘린더 */}
         <section className={`${styles.section} ${styles.sectionCheck}`}>
           <motion.div
             className={`${styles.sectionImageWrapper} ${styles.sectionImageWrapperBottom}`}
@@ -174,7 +218,21 @@ export default function LandingPage() {
               alt="일정 체크 화면"
               width={600}
               height={420}
-              className={styles.sectionCheckImage}
+              className={`${styles.sectionCheckImage} ${styles.sectionImagePc}`}
+            />
+            <Image
+              src={landingTablet03}
+              alt="일정 체크 화면"
+              width={500}
+              height={360}
+              className={`${styles.sectionCheckImage} ${styles.sectionImageTablet}`}
+            />
+            <Image
+              src={landingMobile03}
+              alt="일정 체크 화면"
+              width={320}
+              height={240}
+              className={`${styles.sectionCheckImage} ${styles.sectionImageMobile}`}
             />
           </motion.div>
 
@@ -230,7 +288,21 @@ export default function LandingPage() {
               alt="댓글 및 공유 화면"
               width={860}
               height={560}
-              className={styles.sectionCommentImage}
+              className={`${styles.sectionCommentImage} ${styles.sectionImagePc}`}
+            />
+            <Image
+              src={landingTablet04}
+              alt="댓글 및 공유 화면"
+              width={640}
+              height={420}
+              className={`${styles.sectionCommentImage} ${styles.sectionImageTablet}`}
+            />
+            <Image
+              src={landingMobile04}
+              alt="댓글 및 공유 화면"
+              width={320}
+              height={240}
+              className={`${styles.sectionCommentImage} ${styles.sectionImageMobile}`}
             />
           </motion.div>
         </section>
