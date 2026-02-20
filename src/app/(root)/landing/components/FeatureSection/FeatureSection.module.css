@@ -59,8 +59,6 @@
 }
 
 /* ── 2번 copy ── */
-.copyLeft {
-}
 
 @media (min-width: 1200px) {
   .copyLeft {
@@ -73,8 +71,6 @@
 }
 
 /* ── 4번 copy ── */
-.copyLeftWide {
-}
 
 @media (min-width: 1200px) {
   .copyLeftWide {
@@ -87,8 +83,6 @@
 }
 
 /* ── 3번 copy: order:2로 우측에 배치 ── */
-.copyRight {
-}
 
 @media (min-width: 1200px) {
   .copyRight {
@@ -193,8 +187,6 @@
 }
 
 /* ── 2번 media ── */
-.mediaTwo {
-}
 
 @media (min-width: 1200px) {
   .mediaTwo {
@@ -209,8 +201,6 @@
  * padding-top: 230px으로 이미지 시작점을 내려 실질 높이 제한
  * order:1 → copyRight(order:2)보다 앞에 → 시각적으로 좌측
  */
-.mediaThree {
-}
 
 @media (min-width: 1200px) {
   .mediaThree {
@@ -222,8 +212,6 @@
 }
 
 /* ── 4번 media ── */
-.mediaFour {
-}
 
 @media (min-width: 1200px) {
   .mediaFour {
