@@ -1,0 +1,45 @@
+.section {
+  background: var(--color-background-primary);
+  /* PC 시안 느낌: 적당한 높이 */
+  padding: 120px 0;
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+@media (min-width: 1200px) {
+  .inner {
+    padding-left: calc(270px + 24px);
+  }
+}
+
+.title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-brand-primary); /* Brand/Primary */
+  word-break: keep-all;
+}
+
+.desc {
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-tertiary);
+  word-break: keep-all;
+}
+
+.ctaLink {
+  margin-top: 26px;
+  display: inline-block;
+  text-decoration: none;
+}

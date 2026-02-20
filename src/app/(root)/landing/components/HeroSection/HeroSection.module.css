@@ -1,0 +1,86 @@
+.section {
+  position: relative;
+  background: var(--color-background-secondary);
+  overflow: hidden;
+
+  /* ✅ Hero는 화면 꽉 */
+  height: 100vh;
+  min-height: 900px; /* 필요하면 880~960으로 조정 */
+  max-height: 1080px; /* 원하면 유지, 싫으면 제거 */
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 1200px) {
+  .inner {
+    padding-left: calc(270px + 24px);
+  }
+}
+
+.copy {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* 아이콘은 더 왼쪽 */
+.icon {
+  width: 48px;
+  height: 48px;
+}
+
+/* ✅ 텍스트가 아이콘보다 안쪽(시안 느낌 핵심) */
+.textBlock {
+  padding-left: 20px; /* 시안에 맞게 16~28 사이로 조정 */
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.kicker {
+  margin: 0;
+  font-weight: 600;
+  font-size: 18px;
+  color: var(--color-slate-400); /* ✅ slate/400 */
+  word-break: keep-all;
+}
+
+.title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 72px; /* 시안 느낌: 64보다 큼 */
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-brand-primary); /* ✅ brand/primary */
+}
+
+.ctaLink {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+}
+
+/* ✅ 우측 이미지: “붙어서 꽉” */
+.visual {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.visual img {
+  height: 100%;
+  width: auto;
+  max-width: none;
+  display: block;
+}

@@ -1,0 +1,38 @@
+/* Sidebar는 덮는 구조: 전역 padding-left 절대 금지 */
+.content {
+  /* MobileHeader 높이만큼만 내려주기 (<=1199) */
+  padding-top: 60px;
+}
+
+@media (min-width: 768px) and (max-width: 1199px) {
+  .content {
+    padding-top: 72px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content {
+    padding-top: 0;
+  }
+}
+
+/* 섹션 공통: 배경은 section이 담당, 내용 정렬은 inner가 담당 */
+.section {
+  width: 100%;
+}
+
+/* PC에서만: Sidebar가 덮는 폭을 고려해 inner 컨테이너를 오른쪽으로 밀기
+   (배경은 section이 full width로 깔리므로 좌측도 색 유지됨)
+*/
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+@media (min-width: 1200px) {
+  .inner {
+    /* Sidebar 270 + 좌우 안전 여백 24 */
+    padding-left: calc(270px + 24px);
+  }
+}

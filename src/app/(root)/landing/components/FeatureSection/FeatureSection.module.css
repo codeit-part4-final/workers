@@ -1,0 +1,99 @@
+.section {
+  width: 100%;
+  overflow: hidden;
+}
+
+.bgSlate {
+  background: var(--color-slate-50);
+}
+
+.bgBrand {
+  background: var(--color-brand-primary);
+}
+
+.inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100%;
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 1200px) {
+  .inner {
+    padding-left: calc(270px + 24px);
+  }
+}
+
+.grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.textRight {
+  grid-template-columns: 1.2fr 1fr;
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+}
+
+.title {
+  margin: 0;
+  font-weight: 800;
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  word-break: keep-all;
+}
+
+.desc {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--color-text-tertiary);
+  white-space: pre-line; /* \n 줄바꿈 유지 */
+  word-break: keep-all;
+}
+
+/* 브랜드 배경(3번)은 텍스트 색이 더 밝아야 할 수도 있음 */
+.bgBrand .title,
+.bgBrand .desc {
+  color: var(--color-text-inverse, #fff);
+}
+
+.media {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.bottom {
+  align-items: flex-end;
+}
+
+.media img {
+  width: auto;
+  height: auto;
+  max-width: 1024px; /* 2번 기준 */
+  max-height: 720px; /* 섹션 높이에 맞게 조정 */
+  display: block;
+}
+
+.bottom {
+  align-items: flex-end;
+  padding-bottom: 0;
+}
