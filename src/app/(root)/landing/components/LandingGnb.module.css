@@ -1,0 +1,92 @@
+.gnb {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: var(--color-background-primary);
+  border-bottom: 1px solid var(--color-background-tertiary);
+  height: 60px;
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1200px;
+  height: 100%;
+  margin: 0 auto;
+  padding: 0 32px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+/* PC에서는 logoLarge, 모바일/태블릿에서는 logoSmall */
+.logoSmall {
+  display: none;
+}
+
+.logoLarge {
+  display: block;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.loginLink {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.loginLink:hover {
+  color: var(--color-brand-primary);
+}
+
+.signupLink {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--color-brand-primary);
+  text-decoration: none;
+  padding: 8px 16px;
+  border: 1.5px solid var(--color-brand-primary);
+  border-radius: 8px;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.signupLink:hover {
+  background-color: var(--color-brand-secondary);
+}
+
+/* 태블릿 (744px) */
+@media (max-width: 1023px) {
+  .inner {
+    padding: 0 24px;
+  }
+
+  .logoLarge {
+    display: none;
+  }
+
+  .logoSmall {
+    display: block;
+  }
+}
+
+/* 모바일 (375px) */
+@media (max-width: 743px) {
+  .inner {
+    padding: 0 16px;
+  }
+}

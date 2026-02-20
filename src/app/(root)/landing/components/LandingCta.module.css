@@ -1,0 +1,73 @@
+.cta {
+  /* 마지막 섹션은 min-height: 100vh 사용하지 않음 (figma 기준 자연스러운 높이) */
+  padding: 120px 32px;
+  background-color: var(--color-background-primary);
+}
+
+.inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-brand-primary);
+  line-height: 1.17;
+}
+
+.description {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-text-default); /* #64748B */
+  line-height: 1.19;
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16px;
+  height: 48px;
+  padding: 0 32px;
+  border-radius: 12px;
+  background-color: var(--color-brand-primary);
+  color: var(--color-text-inverse);
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+}
+
+.ctaButton:hover {
+  background-color: var(--color-interaction-hover);
+}
+
+/* 태블릿 */
+@media (max-width: 1023px) {
+  .cta {
+    padding: 80px 24px;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 743px) {
+  .cta {
+    padding: 60px 16px;
+  }
+
+  .title {
+    font-size: 20px;
+  }
+
+  .description {
+    font-size: 14px;
+  }
+}

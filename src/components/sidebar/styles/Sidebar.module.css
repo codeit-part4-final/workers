@@ -1,4 +1,8 @@
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 50;
   width: 270px;
   height: 100vh;
   border-right: 1px solid var(--color-background-tertiary);
@@ -13,9 +17,7 @@
   }
 }
 
-.collapsed {
-  position: relative;
-}
+/* position: fixed는 .sidebar에서 이미 설정됨. collapsed 상태에서도 유지 */
 
 .header {
   display: flex;
