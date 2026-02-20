@@ -1,4 +1,5 @@
 import Image, { StaticImageData } from 'next/image';
+
 import gradationFolder from '@/assets/icons/landing/gradation_folder.svg';
 import gradationCheck from '@/assets/icons/landing/gradation_check.svg';
 import gradationMessage from '@/assets/icons/landing/gradation_message.svg';
@@ -6,86 +7,96 @@ import gradationMessage from '@/assets/icons/landing/gradation_message.svg';
 import landingPC02 from '@/assets/img/landing/pc/landingPC_02.svg';
 import landingPC03 from '@/assets/img/landing/pc/landingPC_03.svg';
 import landingPC04 from '@/assets/img/landing/pc/landingPC_04.svg';
+import landingTablet02 from '@/assets/img/landing/tablet/landingTablet_02.svg';
+import landingTablet03 from '@/assets/img/landing/tablet/landingTablet_03.svg';
+import landingTablet04 from '@/assets/img/landing/tablet/landingTablet_04.svg';
+import landingMobile02 from '@/assets/img/landing/mobile/mobileSmall_02.svg';
+import landingMobile03 from '@/assets/img/landing/mobile/mobileSmall_03.svg';
+import landingMobile04 from '@/assets/img/landing/mobile/mobileSmall_04.svg';
 
 import styles from './FeatureSection.module.css';
 
 type Variant = 'two' | 'three' | 'four';
 
-const DATA: Record<
-  Variant,
-  {
-    bg: 'slate' | 'brand';
-    height: number;
-    icon: StaticImageData;
-    titleLines: [string, string];
-    desc: string;
-    image: StaticImageData;
-    imageAlign: 'center' | 'bottom';
-    layout: 'textLeft' | 'textRight';
-  }
-> = {
+type FeatureData = {
+  bg: 'slate' | 'brand';
+  icon: StaticImageData;
+  title: string;
+  desc: string;
+  imgPc: StaticImageData;
+  imgTablet: StaticImageData;
+  imgMobile: StaticImageData;
+  copyClass: string;
+  mediaClass: string;
+  /** PC 이미지에 추가로 붙는 클래스 (없으면 undefined) */
+  imgPcClass?: string;
+};
+
+const FEATURE_DATA: Record<Variant, FeatureData> = {
   two: {
     bg: 'slate',
-    height: 800,
     icon: gradationFolder,
-    titleLines: ['칸반보드로 함께', '할 일 목록을 관리해요'],
+    title: '칸반보드로 함께\n할 일 목록을 관리해요',
     desc: '팀원과 함께 실시간으로 할 일을 추가하고\n지금 무엇을 해야 하는지 한눈에 볼 수 있어요',
-    image: landingPC02,
-    imageAlign: 'center',
-    layout: 'textLeft',
+    imgPc: landingPC02,
+    imgTablet: landingTablet02,
+    imgMobile: landingMobile02,
+    copyClass: styles.copyLeft,
+    mediaClass: styles.mediaTwo,
   },
   three: {
     bg: 'brand',
-    height: 750,
     icon: gradationCheck,
-    titleLines: ['팀원들과 함께', '할 일을 체크해요'],
-    desc: '세부적으로 할 일들을 간편하게 체크해요\n팀원과 빠르게 완료해보세요',
-    image: landingPC03,
-    imageAlign: 'bottom',
-    layout: 'textRight',
+    title: '세부적으로 할 일들을\n간편하게 체크해요',
+    desc: '일정에 맞춰 해야 할 세부 항목을 정리하고,\n하나씩 빠르게 완료해보세요',
+    imgPc: landingPC03,
+    imgTablet: landingTablet03,
+    imgMobile: landingMobile03,
+    copyClass: styles.copyRight,
+    mediaClass: styles.mediaThree,
+    /*
+     * 3번 이미지(966×649)는 가로 비율이 커서
+     * imgPc 공통값 height:100%를 그대로 쓰면 가로가 섹션 너비를 초과함
+     * → imgPcWide 클래스로 width:100%, height:auto 적용
+     */
   },
   four: {
     bg: 'slate',
-    height: 800,
     icon: gradationMessage,
-    titleLines: ['할 일 공유를 넘어', '의견을 나누고 함께 결정해요'],
-    desc: '댓글로 진행사항을 기록하고 피드백을 주고받으며\n함께 결정을 내릴 수 있어요',
-    image: landingPC04,
-    imageAlign: 'bottom',
-    layout: 'textLeft',
+    title: '할 일 공유를 넘어\n의견을 나누고 함께 결정해요',
+    desc: '댓글로 진행상황을 기록하고 피드백을 주고받으며\n함께 결정을 내릴 수 있어요.',
+    imgPc: landingPC04,
+    imgTablet: landingTablet04,
+    imgMobile: landingMobile04,
+    copyClass: styles.copyLeftWide,
+    mediaClass: styles.mediaFour,
   },
 };
 
 export default function FeatureSection({ variant }: { variant: Variant }) {
-  const d = DATA[variant];
+  const { bg, icon, title, desc, imgPc, imgTablet, imgMobile, copyClass, mediaClass, imgPcClass } =
+    FEATURE_DATA[variant];
 
   return (
     <section
-      className={`${styles.section} ${d.bg === 'brand' ? styles.bgBrand : styles.bgSlate}`}
-      style={{ height: d.height }}
+      className={[styles.section, bg === 'brand' ? styles.bgBrand : styles.bgSlate].join(' ')}
     >
-      <div className={styles.inner}>
-        <div className={`${styles.grid} ${d.layout === 'textRight' ? styles.textRight : ''}`}>
-          <div className={styles.copy}>
-            <div className={styles.icon} aria-hidden="true">
-              <Image src={d.icon} alt="" />
-            </div>
-
-            {/* 2줄 고정(3줄 방지) */}
-            <h2 className={styles.title}>
-              {d.titleLines[0]}
-              <br />
-              {d.titleLines[1]}
-            </h2>
-
-            {/* desc는 줄바꿈 유지 */}
-            <p className={styles.desc}>{d.desc}</p>
-          </div>
-
-          <div className={`${styles.media} ${d.imageAlign === 'bottom' ? styles.bottom : ''}`}>
-            <Image src={d.image} alt="" />
-          </div>
+      <div className={[styles.copy, copyClass].join(' ')}>
+        <Image src={icon} alt="" aria-hidden="true" className={styles.icon} />
+        <div className={styles.textGroup}>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.desc}>{desc}</p>
         </div>
+      </div>
+
+      <div className={[styles.media, mediaClass].join(' ')}>
+        <Image
+          src={imgPc}
+          alt=""
+          className={[styles.imgPc, imgPcClass].filter(Boolean).join(' ')}
+        />
+        <Image src={imgTablet} alt="" className={styles.imgTablet} />
+        <Image src={imgMobile} alt="" className={styles.imgMobile} />
       </div>
     </section>
   );
