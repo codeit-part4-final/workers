@@ -1,3 +1,4 @@
+import KebabMenu from '@/components/KebabMenu/KebabMenu';
 import styles from './MemberCard.module.css';
 import type { TeamMember } from '../../interfaces/team';
 import Image from 'next/image';
@@ -19,6 +20,9 @@ export default function MemberCard({ member }: MemberCardProps) {
       <div className={styles.info}>
         <span className={styles.name}>{member.name}</span>
         <span className={styles.email}>{member.email}</span>
+      </div>
+      <div className={styles.kebab}>
+        <KebabMenu onEdit={() => {}} onDelete={() => {}} />
       </div>
     </div>
   );

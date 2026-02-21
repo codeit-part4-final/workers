@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useParams } from 'next/navigation';
-import TeamHeader from '@/components/team-header/TeamHeader';
 import KanbanBoard from '../Kanban/KanbanBoard';
 import TodayReport from '../TodayReport/TodayReport';
 import MemberSection from '../Member/MemberSection';
@@ -23,22 +22,16 @@ export default function TeamDashboard() {
 
   const [tasks, setTasks] = useState<KanbanTask[]>(MOCK_TASKS);
 
-  const memberImageUrls = MOCK_MEMBERS.filter((m) => m.imageUrl).map((m) => m.imageUrl as string);
-
   return (
     <div className={styles.container}>
-      <TeamHeader
-        variant="team"
+      <TodayReport
         teamName={MOCK_TEAM_NAME}
-        memberCount={MOCK_MEMBERS.length}
-        memberImageUrls={memberImageUrls}
+        totalTasks={MOCK_TODAY_REPORT.totalTasks}
+        doneTasks={MOCK_TODAY_REPORT.doneTasks}
         settingsHref={`/${teamid}/settings`}
       />
 
-      <TodayReport
-        totalTasks={MOCK_TODAY_REPORT.totalTasks}
-        doneTasks={MOCK_TODAY_REPORT.doneTasks}
-      />
+      <div className={styles.divider} />
 
       <div className={styles.content}>
         <div className={styles.kanbanArea}>

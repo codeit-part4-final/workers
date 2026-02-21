@@ -16,7 +16,7 @@ import TodoCard from '@/components/todo-card/TodoCard';
 import AddTodoList from '@/components/Modal/domain/components/AddTodoList/AddTodoList';
 import KanbanColumn from './KanbanColumn';
 import styles from './KanbanBoard.module.css';
-import type { KanbanTask, KanbanStatus } from '../interfaces/team';
+import type { KanbanTask, KanbanStatus } from '../../interfaces/team';
 
 const KANBAN_COLUMNS: { id: KanbanStatus; label: string }[] = [
   { id: 'todo', label: '할 일' },
@@ -33,7 +33,7 @@ interface KanbanBoardProps {
 export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProps) {
   const router = useRouter();
   const [activeTask, setActiveTask] = useState<KanbanTask | null>(null);
-  const [isAddListOpen, setIsAddListOpen] = useState(false);
+  const [addingStatus, setAddingStatus] = useState<KanbanStatus | null>(null);
   const [newListTitle, setNewListTitle] = useState('');
 
   const sensors = useSensors(
@@ -110,19 +110,27 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
     router.push(`/${teamId}/tasks/${taskId}`);
   };
 
+  const handleDeleteTask = (taskId: string) => {
+    setTasks((prev) => prev.filter((t) => t.id !== taskId));
+  };
+
+  const handleEditTask = (_taskId: string) => {
+    // 수정 기능 추후 구현
+  };
+
   const handleAddListSubmit = () => {
-    if (!newListTitle.trim()) return;
+    if (!newListTitle.trim() || !addingStatus) return;
 
     const newTask: KanbanTask = {
       id: `task-${Date.now()}`,
       title: newListTitle.trim(),
-      status: 'todo',
+      status: addingStatus,
       items: [],
     };
 
     setTasks((prev) => [...prev, newTask]);
     setNewListTitle('');
-    setIsAddListOpen(false);
+    setAddingStatus(null);
   };
 
   return (
@@ -142,6 +150,9 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
               tasks={getTasksByStatus(col.id)}
               onItemCheckedChange={handleItemCheckedChange}
               onCardClick={handleCardClick}
+              onAddTask={(status) => setAddingStatus(status)}
+              onDeleteTask={handleDeleteTask}
+              onEditTask={handleEditTask}
             />
           ))}
         </div>
@@ -155,13 +166,12 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
         </DragOverlay>
       </DndContext>
 
-      <button type="button" className={styles.addListButton} onClick={() => setIsAddListOpen(true)}>
-        + 새로운 목록 추가하기
-      </button>
-
       <AddTodoList
-        isOpen={isAddListOpen}
-        onClose={() => setIsAddListOpen(false)}
+        isOpen={addingStatus !== null}
+        onClose={() => {
+          setAddingStatus(null);
+          setNewListTitle('');
+        }}
         onSubmit={handleAddListSubmit}
         input={{
           props: {

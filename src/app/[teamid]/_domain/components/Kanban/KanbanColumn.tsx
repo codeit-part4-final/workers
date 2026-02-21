@@ -2,9 +2,12 @@
 
 import { useDroppable } from '@dnd-kit/core';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
+
 import KanbanItem from './KanbanItem';
 import styles from './KanbanColumn.module.css';
 import type { KanbanTask, KanbanStatus } from '../../interfaces/team';
+import Image from 'next/image';
+import Plus from '@/assets/buttons/plus/plusBoxButton.svg';
 
 const COLUMN_LABELS: Record<KanbanStatus, string> = {
   todo: '할 일',
@@ -17,6 +20,9 @@ interface KanbanColumnProps {
   tasks: KanbanTask[];
   onItemCheckedChange?: (taskId: string, itemId: string, checked: boolean) => void;
   onCardClick?: (taskId: string) => void;
+  onAddTask?: (status: KanbanStatus) => void;
+  onDeleteTask?: (taskId: string) => void;
+  onEditTask?: (taskId: string) => void;
 }
 
 export default function KanbanColumn({
@@ -24,6 +30,9 @@ export default function KanbanColumn({
   tasks,
   onItemCheckedChange,
   onCardClick,
+  onAddTask,
+  onDeleteTask,
+  onEditTask,
 }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: status });
   const itemIds = tasks.map((t) => t.id);
@@ -32,7 +41,14 @@ export default function KanbanColumn({
     <div className={styles.column}>
       <div className={styles.columnHeader}>
         <h3 className={styles.columnTitle}>{COLUMN_LABELS[status]}</h3>
-        <span className={styles.columnCount}>{tasks.length}</span>
+        <button
+          type="button"
+          className={styles.addButton}
+          onClick={() => onAddTask?.(status)}
+          aria-label={`${COLUMN_LABELS[status]}에 할 일 추가`}
+        >
+          <Image src={Plus} width={24} height={24} alt="더하기 버튼" />
+        </button>
       </div>
 
       <SortableContext items={itemIds} strategy={verticalListSortingStrategy}>
@@ -43,6 +59,8 @@ export default function KanbanColumn({
               task={task}
               onItemCheckedChange={onItemCheckedChange}
               onCardClick={onCardClick}
+              onDeleteTask={onDeleteTask}
+              onEditTask={onEditTask}
             />
           ))}
         </div>

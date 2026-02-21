@@ -11,11 +11,21 @@ import downArrowSmall from '@/assets/icons/arrow/downArrowSmall.svg';
 import plusSmall from '@/assets/icons/plus/plusSMall.svg';
 import boardSmall from '@/assets/icons/board/boardSmall.svg';
 import { MOCK_TEAMS } from '../../constants/mockData';
+import CreateTeamModal from './Modals/CreateTeamModal'; // CreateTeamModal 컴포넌트 임포트
 
 export default function TeamSidebarDropdown() {
   const params = useParams<{ teamid: string }>();
   const teamid = params?.teamid ?? '';
   const [isOpen, setIsOpen] = useState(true);
+  const [isCreateTeamModalOpen, setIsCreateTeamModalOpen] = useState(false); // 팀 생성 모달 상태
+
+  const handleOpenCreateTeamModal = () => {
+    setIsCreateTeamModalOpen(true);
+  };
+
+  const handleCloseCreateTeamModal = () => {
+    setIsCreateTeamModalOpen(false);
+  };
 
   return (
     <div className={styles.container}>
@@ -53,7 +63,11 @@ export default function TeamSidebarDropdown() {
               </Link>
             ))}
 
-            <button type="button" className={styles.addButton}>
+            <button
+              type="button"
+              className={styles.addButton}
+              onClick={handleOpenCreateTeamModal} // 핸들러 연결
+            >
               <Image src={plusSmall} alt="" width={16} height={16} className={styles.addIcon} />팀
               추가하기
             </button>
@@ -69,6 +83,9 @@ export default function TeamSidebarDropdown() {
         <Image src={boardSmall} alt="" width={20} height={20} />
         <span>자유게시판</span>
       </Link>
+
+      {/* 팀 생성 모달 */}
+      <CreateTeamModal isOpen={isCreateTeamModalOpen} onClose={handleCloseCreateTeamModal} />
     </div>
   );
 }

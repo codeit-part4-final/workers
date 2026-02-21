@@ -1,0 +1,130 @@
+section > .modalContent {
+  width: 384px; /* Adjust as needed for create team form */
+  height: 235px; /* Adjust as needed for create team form */
+  display: inline-flex;
+  padding: 16px 16px 32px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border-radius: 24px;
+  background: var(--Background-Primary, #fff);
+  box-sizing: border-box;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+  box-sizing: border-box;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 8px;
+}
+
+.header {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.title {
+  margin: 0;
+  color: var(--Text-Primary, #1e293b);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 19px;
+}
+
+.closeButton {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.buttonContainer .closeButton,
+.buttonContainer .closeButton:hover:not(:disabled),
+.buttonContainer .closeButton:active:not(:disabled) {
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+
+.form {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form .input {
+  display: flex;
+  width: 280px;
+  height: 48px;
+  padding: 16px;
+  align-items: center;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid var(--Border-Primary, #e2e8f0);
+  background: var(--Background-Primary, #fff);
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.form .input::placeholder {
+  color: var(--Text-Default, #64748b);
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px;
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.button {
+  display: flex;
+  width: 280px;
+  height: 48px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border: none;
+  border-radius: 12px;
+  background: var(--Color-Brand-Primary, #5189fa);
+  color: var(--Text-inverse, #fff);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 19px;
+}
+
+@media (max-width: 480px) {
+  section > .modalContent {
+    border-radius: 24px 24px 0 0;
+  }
+}

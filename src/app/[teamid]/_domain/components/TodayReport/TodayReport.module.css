@@ -1,58 +1,107 @@
 .card {
-  width: 1120px;
+  width: 100%;
   background: var(--color-background-primary);
-  border-radius: 16px;
-  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 15px 50px -12px rgba(0, 0, 0, 0.05);
+  padding: 32px 26px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 36px;
 }
 
-.title {
-  font-size: 14px;
-  font-weight: 600;
+.teamName {
+  font-size: 24px;
+  font-weight: 700;
   color: var(--color-text-primary);
+  line-height: 1.167;
   margin: 0;
 }
 
-.percentRow {
+.content {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 24px;
+  row-gap: 16px;
+}
+
+.row {
+  grid-column: 1;
   display: flex;
-  align-items: baseline;
-  gap: 4px;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.leftCol {
+  display: flex;
+  flex-direction: column;
+}
+
+.progressLabel {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-interaction-inactive);
+  line-height: 1.214;
 }
 
 .percent {
   font-size: 40px;
   font-weight: 700;
   color: var(--color-brand-primary);
-  line-height: 1;
+  line-height: 1.193;
 }
 
-.stats {
+.statsGroup {
   display: flex;
-  gap: 16px;
-  margin-top: 4px;
+  align-items: center;
+  gap: 24px;
 }
 
 .statItem {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 4px;
-  flex: 1;
-  padding: 12px;
-  background: var(--color-background-secondary);
-  border-radius: 12px;
 }
 
 .statLabel {
   font-size: 12px;
   font-weight: 500;
-  color: var(--color-text-default);
+  color: var(--color-interaction-inactive);
 }
 
 .statValue {
-  font-size: 24px;
+  font-size: 32px;
   font-weight: 700;
-  color: var(--color-text-primary);
-  line-height: 1.2;
+  color: var(--color-text-default);
+  line-height: 1.193;
+}
+
+.statValueDone {
+  color: var(--color-brand-primary);
+}
+
+.divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-background-tertiary);
+}
+
+.progressRow {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
+  align-items: center;
+}
+
+.progressBar {
+  min-width: 0;
+}
+
+.settingsLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  text-decoration: none;
 }
