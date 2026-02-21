@@ -16,7 +16,7 @@ import TodoCard from '@/components/todo-card/TodoCard';
 import AddTodoList from '@/components/Modal/domain/components/AddTodoList/AddTodoList';
 import KanbanColumn from './KanbanColumn';
 import styles from './KanbanBoard.module.css';
-import type { KanbanTask, KanbanStatus } from '../../interfaces/team';
+import type { KanbanTask, KanbanStatus, TaskItem } from '../../interfaces/team';
 
 const KANBAN_COLUMNS: { id: KanbanStatus; label: string }[] = [
   { id: 'todo', label: '할 일' },
@@ -114,8 +114,12 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
     setTasks((prev) => prev.filter((t) => t.id !== taskId));
   };
 
-  const handleEditTask = (_taskId: string) => {
-    // 수정 기능 추후 구현
+  const handleUpdateTask = (taskId: string, updatedData: { title: string; items: TaskItem[] }) => {
+    setTasks((prev) =>
+      prev.map((t) =>
+        t.id === taskId ? { ...t, title: updatedData.title, items: updatedData.items } : t,
+      ),
+    );
   };
 
   const handleAddListSubmit = () => {
@@ -152,7 +156,7 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
               onCardClick={handleCardClick}
               onAddTask={(status) => setAddingStatus(status)}
               onDeleteTask={handleDeleteTask}
-              onEditTask={handleEditTask}
+              onUpdateTask={handleUpdateTask}
             />
           ))}
         </div>

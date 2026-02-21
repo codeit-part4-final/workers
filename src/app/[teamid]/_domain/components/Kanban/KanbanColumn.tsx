@@ -5,7 +5,7 @@ import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 
 import KanbanItem from './KanbanItem';
 import styles from './KanbanColumn.module.css';
-import type { KanbanTask, KanbanStatus } from '../../interfaces/team';
+import type { KanbanTask, KanbanStatus, TaskItem } from '../../interfaces/team';
 import Image from 'next/image';
 import Plus from '@/assets/buttons/plus/plusBoxButton.svg';
 
@@ -23,6 +23,7 @@ interface KanbanColumnProps {
   onAddTask?: (status: KanbanStatus) => void;
   onDeleteTask?: (taskId: string) => void;
   onEditTask?: (taskId: string) => void;
+  onUpdateTask?: (taskId: string, updatedData: { title: string; items: TaskItem[] }) => void;
 }
 
 export default function KanbanColumn({
@@ -33,6 +34,7 @@ export default function KanbanColumn({
   onAddTask,
   onDeleteTask,
   onEditTask,
+  onUpdateTask,
 }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id: status });
   const itemIds = tasks.map((t) => t.id);
@@ -61,6 +63,7 @@ export default function KanbanColumn({
               onCardClick={onCardClick}
               onDeleteTask={onDeleteTask}
               onEditTask={onEditTask}
+              onUpdateTask={onUpdateTask}
             />
           ))}
         </div>
