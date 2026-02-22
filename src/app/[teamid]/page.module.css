@@ -13,6 +13,7 @@
   min-width: 0;
   width: 100%; /* Explicitly set width to 100% */
   box-sizing: border-box; /* Ensure padding is included in the width */
+  margin-left: 24px;
 }
 
 /* Apply max-width to direct children of mainContents to prevent overflow */
@@ -51,6 +52,9 @@
   .mobileHeaderWrapper {
     display: none; /* Hide mobile header */
   }
+  .mainContents {
+    margin-left: 0;
+  }
 }
 
 /* Mobile styles */
@@ -71,6 +75,7 @@
 
   .mainContents {
     width: 100%;
+    margin-left: 0;
   }
 }
 
