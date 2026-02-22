@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { memo, useState, useRef, useEffect } from 'react';
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TodoCard from '@/components/todo-card/TodoCard';
@@ -16,7 +16,7 @@ interface KanbanItemProps {
   onUpdateTask?: (taskId: string, updatedData: { title: string; items: TaskItem[] }) => void;
 }
 
-export default function KanbanItem({
+function KanbanItem({
   task,
   onItemCheckedChange,
   onCardClick,
@@ -166,3 +166,5 @@ export default function KanbanItem({
     </div>
   );
 }
+
+export default memo(KanbanItem);

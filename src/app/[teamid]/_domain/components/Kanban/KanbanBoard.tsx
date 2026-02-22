@@ -17,21 +17,21 @@ import AddTodoList from '@/components/Modal/domain/components/AddTodoList/AddTod
 import KanbanColumn from './KanbanColumn';
 import styles from './KanbanBoard.module.css';
 import type { KanbanTask, KanbanStatus, TaskItem } from '../../interfaces/team';
+import { MOCK_TASKS } from '../../constants/mockData';
 
-const KANBAN_COLUMNS: { id: KanbanStatus; label: string }[] = [
+export const KANBAN_COLUMNS: { id: KanbanStatus; label: string }[] = [
   { id: 'todo', label: '할 일' },
   { id: 'inProgress', label: '진행중' },
   { id: 'done', label: '완료' },
 ];
 
 interface KanbanBoardProps {
-  tasks: KanbanTask[];
-  setTasks: React.Dispatch<React.SetStateAction<KanbanTask[]>>;
   teamId: string;
 }
 
-export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProps) {
+export default function KanbanBoard({ teamId }: KanbanBoardProps) {
   const router = useRouter();
+  const [tasks, setTasks] = useState<KanbanTask[]>(MOCK_TASKS);
   const [activeTask, setActiveTask] = useState<KanbanTask | null>(null);
   const [addingStatus, setAddingStatus] = useState<KanbanStatus | null>(null);
   const [newListTitle, setNewListTitle] = useState('');
@@ -42,14 +42,8 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
     }),
   );
 
-  const getTasksByStatus = useCallback(
-    (status: KanbanStatus) => tasks.filter((t) => t.status === status),
-    [tasks],
-  );
-
   const handleDragStart = (event: DragStartEvent) => {
-    const found = tasks.find((t) => t.id === String(event.active.id));
-    setActiveTask(found ?? null);
+    setActiveTask(tasks.find((t) => t.id === String(event.active.id)) ?? null);
   };
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -71,56 +65,68 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
     }
 
     // over가 다른 태스크인 경우
-    const overTask = tasks.find((t) => t.id === overId);
-    const activeTask = tasks.find((t) => t.id === activeId);
-    if (!overTask || !activeTask) return;
+    const overTaskItem = tasks.find((t) => t.id === overId);
+    const activeTaskItem = tasks.find((t) => t.id === activeId);
+    if (!overTaskItem || !activeTaskItem) return;
 
-    if (activeTask.status === overTask.status) {
+    if (activeTaskItem.status === overTaskItem.status) {
       // 같은 컬럼 내 순서 변경
       setTasks((prev) => {
-        const colTasks = prev.filter((t) => t.status === activeTask.status);
-        const otherTasks = prev.filter((t) => t.status !== activeTask.status);
+        const colTasks = prev.filter((t) => t.status === activeTaskItem.status);
+        const otherTasks = prev.filter((t) => t.status !== activeTaskItem.status);
         const oldIdx = colTasks.findIndex((t) => t.id === activeId);
         const newIdx = colTasks.findIndex((t) => t.id === overId);
-        const reordered = arrayMove(colTasks, oldIdx, newIdx);
-        return [...otherTasks, ...reordered];
+        return [...otherTasks, ...arrayMove(colTasks, oldIdx, newIdx)];
       });
     } else {
       // 다른 컬럼으로 이동
       setTasks((prev) =>
-        prev.map((t) => (t.id === activeId ? { ...t, status: overTask.status } : t)),
+        prev.map((t) => (t.id === activeId ? { ...t, status: overTaskItem.status } : t)),
       );
     }
   };
 
-  const handleItemCheckedChange = (taskId: string, itemId: string, checked: boolean) => {
-    setTasks((prev) =>
-      prev.map((task) =>
-        task.id === taskId
-          ? {
-              ...task,
-              items: task.items.map((item) => (item.id === itemId ? { ...item, checked } : item)),
-            }
-          : task,
-      ),
-    );
-  };
+  const handleItemCheckedChange = useCallback(
+    (taskId: string, itemId: string, checked: boolean) => {
+      setTasks((prev) =>
+        prev.map((task) =>
+          task.id === taskId
+            ? {
+                ...task,
+                items: task.items.map((item) => (item.id === itemId ? { ...item, checked } : item)),
+              }
+            : task,
+        ),
+      );
+    },
+    [],
+  );
 
-  const handleCardClick = (taskId: string) => {
-    router.push(`/${teamId}/tasks/${taskId}`);
-  };
+  const handleCardClick = useCallback(
+    (taskId: string) => {
+      router.push(`/${teamId}/tasks/${taskId}`);
+    },
+    [router, teamId],
+  );
 
-  const handleDeleteTask = (taskId: string) => {
+  const handleDeleteTask = useCallback((taskId: string) => {
     setTasks((prev) => prev.filter((t) => t.id !== taskId));
-  };
+  }, []);
 
-  const handleUpdateTask = (taskId: string, updatedData: { title: string; items: TaskItem[] }) => {
-    setTasks((prev) =>
-      prev.map((t) =>
-        t.id === taskId ? { ...t, title: updatedData.title, items: updatedData.items } : t,
-      ),
-    );
-  };
+  const handleUpdateTask = useCallback(
+    (taskId: string, updatedData: { title: string; items: TaskItem[] }) => {
+      setTasks((prev) =>
+        prev.map((t) =>
+          t.id === taskId ? { ...t, title: updatedData.title, items: updatedData.items } : t,
+        ),
+      );
+    },
+    [],
+  );
+
+  const handleAddTask = useCallback((status: KanbanStatus) => {
+    setAddingStatus(status);
+  }, []);
 
   const handleAddListSubmit = () => {
     if (!newListTitle.trim() || !addingStatus) return;
@@ -151,10 +157,11 @@ export default function KanbanBoard({ tasks, setTasks, teamId }: KanbanBoardProp
             <KanbanColumn
               key={col.id}
               status={col.id}
-              tasks={getTasksByStatus(col.id)}
+              label={col.label}
+              tasks={tasks.filter((t) => t.status === col.id)}
               onItemCheckedChange={handleItemCheckedChange}
               onCardClick={handleCardClick}
-              onAddTask={(status) => setAddingStatus(status)}
+              onAddTask={handleAddTask}
               onDeleteTask={handleDeleteTask}
               onUpdateTask={handleUpdateTask}
             />
