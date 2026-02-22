@@ -12,13 +12,19 @@ import plusSmall from '@/assets/icons/plus/plusSMall.svg';
 import boardSmall from '@/assets/icons/board/boardSmall.svg';
 import { useCurrentUserQuery } from '@/shared/queries/user/useCurrentUserQuery';
 
-export default function TeamSidebarDropdown() {
+type Props = {
+  isCollapsed?: boolean;
+};
+
+export default function TeamSidebarDropdown({ isCollapsed }: Props) {
   const params = useParams<{ teamid: string }>();
   const teamid = params?.teamid ?? '';
   const [isOpen, setIsOpen] = useState(true);
 
   const { data: currentUser } = useCurrentUserQuery();
   const teams = currentUser?.memberships.map((m) => m.group) ?? [];
+
+  if (isCollapsed) return null;
 
   return (
     <div className={styles.container}>

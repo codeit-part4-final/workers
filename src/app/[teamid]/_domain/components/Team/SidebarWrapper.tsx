@@ -10,7 +10,7 @@ export default function SidebarWrapper() {
 
   return (
     <Sidebar
-      teamSelect={<TeamSidebarDropdown />}
+      teamSelect={(isCollapsed) => <TeamSidebarDropdown isCollapsed={isCollapsed} />}
       isLoggedIn={!!currentUser}
       profileImage={
         <ProfileImage src={currentUser?.image} size="sm" variant="profile" showBorder={false} />
