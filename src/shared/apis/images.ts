@@ -1,5 +1,3 @@
-import { fetchApi } from './fetchApi';
-
 interface ImageUploadResponse {
   url: string;
 }
@@ -8,7 +6,7 @@ export async function uploadImage(file: File): Promise<ImageUploadResponse> {
   const formData = new FormData();
   formData.append('image', file);
 
-  const response = await fetchApi('/images/upload', {
+  const response = await fetch('/api/images/upload', {
     method: 'POST',
     body: formData,
   });
