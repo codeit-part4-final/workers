@@ -1,5 +1,5 @@
-import { MobileHeader, TabletHeader } from '@/components/sidebar';
 import SidebarWrapper from './_domain/components/Team/SidebarWrapper';
+import TeamNavClient from './_domain/components/Team/TeamNavClient';
 import styles from './page.module.css';
 
 export default function TeamLayout({ children }: { children: React.ReactNode }) {
@@ -8,12 +8,7 @@ export default function TeamLayout({ children }: { children: React.ReactNode }) 
       <div className={styles.desktopSidebar}>
         <SidebarWrapper />
       </div>
-      <div className={styles.tabletHeaderWrapper}>
-        <TabletHeader />
-      </div>
-      <div className={styles.mobileHeaderWrapper}>
-        <MobileHeader />
-      </div>
+      <TeamNavClient />
       <section className={styles.mainContents}>{children}</section>
     </main>
   );
