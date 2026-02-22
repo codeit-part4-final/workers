@@ -17,9 +17,7 @@
   }
 }
 
-.collapsed {
-  position: relative;
-}
+/* position: fixed는 .sidebar에서 이미 설정됨. collapsed 상태에서도 유지 */
 
 .header {
   display: flex;
