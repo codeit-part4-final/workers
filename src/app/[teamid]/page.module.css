@@ -24,6 +24,10 @@
 /* Default styles (Desktop) */
 .desktopSidebar {
   display: block; /* Show desktop sidebar */
+  /* fixed 포지션 사이드바가 flex 흐름에서 공간을 차지하지 않으므로, spacer 역할을 위해 너비 명시 */
+  width: 270px;
+  min-width: 270px;
+  flex-shrink: 0;
 }
 .tabletHeaderWrapper {
   display: none; /* Hide tablet header */

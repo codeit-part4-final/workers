@@ -11,6 +11,7 @@ export default function SidebarWrapper() {
   return (
     <Sidebar
       teamSelect={<TeamSidebarDropdown />}
+      isLoggedIn={!!currentUser}
       profileImage={
         <ProfileImage src={currentUser?.image} size="sm" variant="profile" showBorder={false} />
       }
