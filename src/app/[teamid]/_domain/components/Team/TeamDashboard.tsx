@@ -80,7 +80,16 @@ export default function TeamDashboard() {
   const handleConfirmDelete = () => {
     deleteGroup(undefined, {
       onSuccess: () => {
-        router.push('/');
+        // 삭제된 팀을 제외한 나머지 멤버십에서 첫 번째 팀으로 이동, 없으면 addteam 페이지로 이동
+        const remainingTeams = (currentUser?.memberships ?? [])
+          .filter((m) => m.groupId !== groupId)
+          .map((m) => m.group);
+
+        if (remainingTeams.length > 0) {
+          router.push(`/${remainingTeams[0].id}`);
+        } else {
+          router.push('/addteam');
+        }
       },
     });
   };
