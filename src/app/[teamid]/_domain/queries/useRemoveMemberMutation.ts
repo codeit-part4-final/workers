@@ -1,12 +1,12 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createTaskList } from '../apis/taskList';
+import { removeGroupMember } from '@/shared/apis/groups/member';
 import { teamGroupKeys } from './queryKeys';
 
-export function useCreateTaskListMutation(groupId: number) {
+export function useRemoveMemberMutation(groupId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (name: string) => createTaskList(groupId, name),
+    mutationFn: (memberUserId: number) => removeGroupMember(groupId, memberUserId),
     onSettled: () => {
       void queryClient.invalidateQueries({ queryKey: teamGroupKeys.detail(groupId) });
     },
