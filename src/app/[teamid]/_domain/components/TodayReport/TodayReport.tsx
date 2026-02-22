@@ -1,7 +1,7 @@
 'use client';
 
+import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import ProgressBar from '@/components/progressbar/ProgressBar';
 import SettingBig from '@/assets/icons/setting/SettingBig.svg';
 import styles from './TodayReport.module.css';
@@ -10,16 +10,36 @@ interface TodayReportProps {
   teamName: string;
   totalTasks: number;
   doneTasks: number;
-  settingsHref?: string;
+  onDeleteGroup?: () => void;
 }
 
 export default function TodayReport({
   teamName,
   totalTasks,
   doneTasks,
-  settingsHref,
+  onDeleteGroup,
 }: TodayReportProps) {
   const progressPercent = totalTasks > 0 ? Math.round((doneTasks / totalTasks) * 100) : 0;
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isDropdownOpen) return;
+
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isDropdownOpen]);
+
+  const handleDeleteGroup = () => {
+    setIsDropdownOpen(false);
+    onDeleteGroup?.();
+  };
 
   return (
     <section className={styles.card}>
@@ -52,10 +72,25 @@ export default function TodayReport({
             ariaLabel="오늘의 진행률"
             className={styles.progressBar}
           />
-          {settingsHref && (
-            <Link href={settingsHref} className={styles.settingsLink} aria-label="설정">
-              <Image src={SettingBig} alt="설정 버튼" />
-            </Link>
+          {onDeleteGroup && (
+            <div className={styles.settingsWrapper} ref={dropdownRef}>
+              <button
+                type="button"
+                className={styles.settingsButton}
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
+                aria-label="설정"
+                aria-expanded={isDropdownOpen}
+              >
+                <Image src={SettingBig} alt="설정 버튼" />
+              </button>
+              {isDropdownOpen && (
+                <div className={styles.dropdown}>
+                  <button type="button" className={styles.dropdownItem} onClick={handleDeleteGroup}>
+                    팀 삭제하기
+                  </button>
+                </div>
+              )}
+            </div>
           )}
         </div>
       </div>

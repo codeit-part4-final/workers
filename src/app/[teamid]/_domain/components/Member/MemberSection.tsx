@@ -1,24 +1,39 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import MemberInvite from '@/components/Modal/domain/components/MemberInvite/MemberInvite';
 import MemberCard from './MemberCard';
 import styles from './MemberSection.module.css';
-import { MOCK_INVITE_LINK } from '../../constants/mockData';
-import type { TeamMember } from '../../interfaces/team';
+import type { GroupMember } from '../../apis/types';
+import { useGroupInvitationQuery } from '../../queries/useGroupInvitationQuery';
+
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL ?? '';
+
+function buildInviteLink(inviteToken: string): string {
+  // 프론트엔드 도메인에서 초대 수락 경로로 이동하는 링크 생성
+  if (typeof window !== 'undefined') {
+    return `${window.location.origin}/addteam/join?token=${inviteToken}`;
+  }
+  return `${BASE_URL}/addteam/join?token=${inviteToken}`;
+}
 
 interface MemberSectionProps {
-  members: TeamMember[];
+  members: GroupMember[];
   isAdmin: boolean;
+  groupId: number;
   teamId: string;
 }
 
-export default function MemberSection({ members, isAdmin, teamId }: MemberSectionProps) {
+export default function MemberSection({ members, isAdmin, groupId }: MemberSectionProps) {
   const [isInviteOpen, setIsInviteOpen] = useState(false);
 
-  const handleCopyLink = (link: string) => {
+  const { data: invitationData } = useGroupInvitationQuery(groupId, isInviteOpen);
+
+  const inviteLink = invitationData ? buildInviteLink(invitationData.inviteToken) : '';
+
+  const handleCopyLink = useCallback((link: string) => {
     navigator.clipboard.writeText(link).catch(() => {});
-  };
+  }, []);
 
   return (
     <section className={styles.section} aria-label="팀 멤버">
@@ -38,7 +53,7 @@ export default function MemberSection({ members, isAdmin, teamId }: MemberSectio
 
       <div className={styles.list}>
         {members.map((member) => (
-          <MemberCard key={member.id} member={member} />
+          <MemberCard key={member.userId} member={member} isAdmin={isAdmin} groupId={groupId} />
         ))}
       </div>
 
@@ -46,7 +61,7 @@ export default function MemberSection({ members, isAdmin, teamId }: MemberSectio
         isOpen={isInviteOpen}
         onClose={() => setIsInviteOpen(false)}
         invite={{
-          link: MOCK_INVITE_LINK,
+          link: inviteLink,
           onCopyLink: handleCopyLink,
         }}
       />

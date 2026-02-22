@@ -6,6 +6,7 @@ import AddTodoList from '@/components/Modal/domain/components/AddTodoList/AddTod
 import KanbanColumn from './KanbanColumn';
 import styles from './KanbanBoard.module.css';
 import type { KanbanStatus } from '../../interfaces/team';
+import type { TaskList } from '../../apis/types';
 import { useKanbanTasks } from '../../hooks/useKanbanTasks';
 import { useKanbanDnd } from '../../hooks/useKanbanDnd';
 
@@ -18,10 +19,12 @@ export const KANBAN_COLUMNS: { id: KanbanStatus; label: string }[] = [
 const COLUMN_IDS = KANBAN_COLUMNS.map((c) => c.id);
 
 interface KanbanBoardProps {
+  groupId: number;
   teamId: string;
+  taskLists: Omit<TaskList, 'tasks'>[];
 }
 
-export default function KanbanBoard({ teamId }: KanbanBoardProps) {
+export default function KanbanBoard({ groupId, teamId, taskLists }: KanbanBoardProps) {
   const {
     tasks,
     setTasks,
@@ -35,7 +38,7 @@ export default function KanbanBoard({ teamId }: KanbanBoardProps) {
     handleAddListSubmit,
     handleAddListClose,
     handleNewListTitleChange,
-  } = useKanbanTasks(teamId);
+  } = useKanbanTasks(groupId, teamId, taskLists);
 
   const { activeTask, sensors, handleDragStart, handleDragEnd } = useKanbanDnd(
     tasks,
@@ -80,7 +83,7 @@ export default function KanbanBoard({ teamId }: KanbanBoardProps) {
       <AddTodoList
         isOpen={addingStatus !== null}
         onClose={handleAddListClose}
-        onSubmit={handleAddListSubmit}
+        onSubmit={() => void handleAddListSubmit()}
         input={{
           props: {
             value: newListTitle,

@@ -10,12 +10,15 @@ import chessSmall from '@/assets/icons/chess/chessSmall.svg';
 import downArrowSmall from '@/assets/icons/arrow/downArrowSmall.svg';
 import plusSmall from '@/assets/icons/plus/plusSMall.svg';
 import boardSmall from '@/assets/icons/board/boardSmall.svg';
-import { MOCK_TEAMS } from '../../constants/mockData';
+import { useCurrentUserQuery } from '@/shared/queries/user/useCurrentUserQuery';
 
 export default function TeamSidebarDropdown() {
   const params = useParams<{ teamid: string }>();
   const teamid = params?.teamid ?? '';
   const [isOpen, setIsOpen] = useState(true);
+
+  const { data: currentUser } = useCurrentUserQuery();
+  const teams = currentUser?.memberships.map((m) => m.group) ?? [];
 
   return (
     <div className={styles.container}>
@@ -42,11 +45,11 @@ export default function TeamSidebarDropdown() {
 
         {isOpen && (
           <>
-            {MOCK_TEAMS.map((team) => (
+            {teams.map((team) => (
               <Link
                 key={team.id}
                 href={`/${team.id}`}
-                className={`${styles.teamItem} ${team.id === teamid ? styles.active : ''}`}
+                className={`${styles.teamItem} ${String(team.id) === teamid ? styles.active : ''}`}
               >
                 <Image src={chessSmall} alt="" width={20} height={20} />
                 <span>{team.name}</span>

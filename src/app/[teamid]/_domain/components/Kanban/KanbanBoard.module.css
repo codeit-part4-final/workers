@@ -23,9 +23,32 @@
 }
 
 .board {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
-  align-items: flex-start;
+  align-items: start;
+}
+
+/* 태블릿: 컬럼을 한 줄씩 세로로 쌓기 */
+@media (min-width: 768px) and (max-width: 1279px) {
+  .board {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+}
+
+/* 모바일 */
+@media (max-width: 767px) {
+  .board {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    align-items: center;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
 }
 
 .addListButton {
