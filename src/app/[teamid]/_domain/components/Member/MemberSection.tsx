@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import MemberInvite from '@/components/Modal/domain/components/MemberInvite/MemberInvite';
+import Toast from '@/components/toast/Toast';
 import MemberCard from './MemberCard';
 import styles from './MemberSection.module.css';
 import type { GroupMember } from '../../apis/types';
@@ -26,6 +27,7 @@ interface MemberSectionProps {
 
 export default function MemberSection({ members, isAdmin, groupId }: MemberSectionProps) {
   const [isInviteOpen, setIsInviteOpen] = useState(false);
+  const [isToastOpen, setIsToastOpen] = useState(false);
 
   const { data: invitationData } = useGroupInvitationQuery(groupId, isInviteOpen);
 
@@ -33,6 +35,7 @@ export default function MemberSection({ members, isAdmin, groupId }: MemberSecti
 
   const handleCopyLink = useCallback((link: string) => {
     navigator.clipboard.writeText(link).catch(() => {});
+    setIsToastOpen(true);
   }, []);
 
   return (
@@ -64,6 +67,14 @@ export default function MemberSection({ members, isAdmin, groupId }: MemberSecti
           link: inviteLink,
           onCopyLink: handleCopyLink,
         }}
+      />
+
+      <Toast
+        message="링크가 복사되었습니다."
+        isOpen={isToastOpen}
+        onDismiss={() => setIsToastOpen(false)}
+        actionLabel={null}
+        className={styles.toastCenter}
       />
     </section>
   );
