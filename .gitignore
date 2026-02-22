@@ -46,6 +46,7 @@ next-env.d.ts
 
 # dev scripts
 scripts/refresh-dev-token.mjs
+.dev-session.json
 .documents/AI_RULES.md
 .documents/clean.md
 .documents/daily-report.md
