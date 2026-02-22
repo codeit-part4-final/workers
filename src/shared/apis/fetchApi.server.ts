@@ -1,9 +1,10 @@
+// TODO: 팀원 코드 BFF 마이그레이션 완료 후 주석 해제
+// import 'server-only';
+
 import { BASE_URL, TEAM_ID } from './config';
 
 const BODYLESS_METHODS = new Set(['GET', 'HEAD']);
 const NORMALIZED_BASE_URL = normalizeBaseUrl(BASE_URL);
-const DEV_ACCESS_TOKEN = process.env.NEXT_PUBLIC_DEV_ACCESS_TOKEN;
-const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 function normalizeBaseUrl(baseUrl: string) {
   return baseUrl.endsWith('/') ? baseUrl : `${baseUrl}/`;
@@ -39,22 +40,13 @@ function shouldSetJsonContentType(headers: Headers, body: RequestInit['body']) {
   return typeof body === 'string';
 }
 
-function shouldAttachDevAuthHeader(headers: Headers) {
-  if (!DEV_ACCESS_TOKEN) return false;
-  if (headers.has('Authorization')) return false;
-  return IS_DEVELOPMENT;
-}
-
-export function fetchApi(path: string, options: RequestInit = {}) {
+export function fetchApiServer(path: string, options: RequestInit = {}) {
   const method = getMethod(options);
   assertBodyAllowed(method, options.body);
 
   const headers = new Headers(options.headers);
   if (shouldSetJsonContentType(headers, options.body)) {
     headers.set('Content-Type', 'application/json');
-  }
-  if (shouldAttachDevAuthHeader(headers)) {
-    headers.set('Authorization', `Bearer ${DEV_ACCESS_TOKEN}`);
   }
 
   return fetch(buildApiUrl(path), {
@@ -63,3 +55,7 @@ export function fetchApi(path: string, options: RequestInit = {}) {
     headers,
   });
 }
+
+// TODO: 팀원 BFF 마이그레이션 완료 후 제거
+// groups/http.ts, user/userApi.ts가 fetchApi 이름으로 import 중 — 호환용 alias
+export const fetchApi = fetchApiServer;
