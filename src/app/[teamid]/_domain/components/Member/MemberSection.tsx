@@ -31,7 +31,7 @@ export default function MemberSection({ members, isAdmin, groupId }: MemberSecti
 
   const { data: invitationData } = useGroupInvitationQuery(groupId, isInviteOpen);
 
-  const inviteLink = invitationData ? buildInviteLink(invitationData.inviteToken) : '';
+  const inviteLink = invitationData ? buildInviteLink(invitationData) : '';
 
   const handleCopyLink = useCallback((link: string) => {
     navigator.clipboard.writeText(link).catch(() => {});

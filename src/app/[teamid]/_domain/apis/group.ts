@@ -1,5 +1,5 @@
 import { requestJson, requestVoid } from '@/shared/apis/groups/http';
-import type { Group, GroupInvitation, Task, UpdateGroupBody } from './types';
+import type { Group, Task, UpdateGroupBody } from './types';
 
 const GROUP_ERROR_MESSAGE = {
   fetch: '그룹 정보 조회 실패',
@@ -26,11 +26,9 @@ export function deleteGroup(groupId: number): Promise<void> {
   });
 }
 
-export function getGroupInvitation(groupId: number): Promise<GroupInvitation> {
-  return requestJson<GroupInvitation>(
-    `/groups/${groupId}/invitation`,
-    GROUP_ERROR_MESSAGE.invitation,
-  );
+// API 응답: 초대 토큰 문자열 (JWT) 그대로 반환
+export function getGroupInvitation(groupId: number): Promise<string> {
+  return requestJson<string>(`/groups/${groupId}/invitation`, GROUP_ERROR_MESSAGE.invitation);
 }
 
 export function getGroupTasks(groupId: number, date?: string): Promise<Task[]> {

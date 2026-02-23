@@ -58,8 +58,3 @@ export interface UpdateGroupBody {
   name?: string;
   image?: string | null;
 }
-
-// swagger 스펙이 {} 이므로 실제 응답 확인 후 수정 필요
-export interface GroupInvitation {
-  inviteToken: string;
-}
