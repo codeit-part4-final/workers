@@ -22,7 +22,6 @@ function isGroupAdmin(members: GroupMember[] | undefined, userId: number): boole
   return members?.some((m) => m.userId === userId && m.role === 'ADMIN') ?? false;
 }
 
-// 칸반 카드 완료 여부 판정 (모든 태스크가 완료된 경우)
 function isTaskListDone(tasks: { doneAt: string | null }[]): boolean {
   return tasks.length > 0 && tasks.every((t) => t.doneAt !== null);
 }
@@ -43,7 +42,6 @@ export default function TeamDashboard() {
   });
   const today = getTodayDateString();
 
-  // 칸반과 동일한 쿼리로 태스크 목록을 가져와 TodayReport 카운트 산출
   const taskListQueries = useQueries({
     queries: (group?.taskLists ?? []).map((tl) => taskListQueryOptions(groupId, tl.id, today)),
   });
@@ -51,6 +49,7 @@ export default function TeamDashboard() {
   const { data: currentUser } = useCurrentUserQuery();
   const { mutate: deleteGroup } = useDeleteGroupMutation(groupId);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isNavigating, setIsNavigating] = useState(false);
 
   if (isNaN(groupId) || groupId <= 0) {
     return (
@@ -65,6 +64,7 @@ export default function TeamDashboard() {
   }
 
   if (isError || !group) {
+    if (isNavigating) return <div className={styles.container} />;
     return (
       <div className={styles.container}>
         <p>그룹을 찾을 수 없습니다.</p>
@@ -72,25 +72,25 @@ export default function TeamDashboard() {
     );
   }
 
-  // 칸반 카드(할 일 목록) 기준으로 오늘의 할 일/완료 카운트 산출
   const totalTasks = taskListQueries.length;
   const doneTasks = taskListQueries.filter((q) => isTaskListDone(q.data?.tasks ?? [])).length;
   const isAdmin = currentUser ? isGroupAdmin(group.members, currentUser.id) : false;
 
   const handleConfirmDelete = () => {
+    // onSettled가 currentUser 쿼리를 invalidate하기 전에 미리 계산
+    const remaining = (currentUser?.memberships ?? [])
+      .filter((m) => m.group.id !== groupId)
+      .map((m) => m.group);
+
+    setIsDeleteModalOpen(false);
+    setIsNavigating(true);
+
     deleteGroup(undefined, {
       onSuccess: () => {
-        setIsDeleteModalOpen(false);
-        // 삭제된 팀을 제외한 나머지 멤버십에서 첫 번째 팀으로 이동, 없으면 addteam 페이지로 이동
-        const remainingTeams = (currentUser?.memberships ?? [])
-          .filter((m) => m.groupId !== groupId)
-          .map((m) => m.group);
-
-        if (remainingTeams.length > 0) {
-          router.push(`/${remainingTeams[0].id}`);
-        } else {
-          router.push('/addteam');
-        }
+        router.push(remaining.length > 0 ? `/${remaining[0].id}` : '/addteam');
+      },
+      onError: () => {
+        setIsNavigating(false);
       },
     });
   };
