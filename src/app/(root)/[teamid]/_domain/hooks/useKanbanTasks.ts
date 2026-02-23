@@ -108,8 +108,38 @@ export function useKanbanTasks(
     [deleteTaskListMutation],
   );
 
-  // 태스크 아이템 체크 상태 변경은 할 일 목록 상세 페이지에서 처리하므로 빈 함수
-  const handleItemCheckedChange = useCallback(() => {}, []);
+  // 체크박스 클릭 시 낙관적 업데이트 후 서버에 완료 상태 반영
+  // 컬럼 이동은 발생하지 않음 (드래그앤 드롭으로만 이동 가능)
+  const handleItemCheckedChange = useCallback(
+    async (taskId: string, itemId: string, checked: boolean) => {
+      const taskListId = Number(taskId);
+      const queryKey = taskListKeys.detail(groupId, taskListId, today);
+
+      // 진행 중인 백그라운드 리패치 취소 (낙관적 업데이트가 덮어씌워지는 것을 방지)
+      await queryClient.cancelQueries({ queryKey });
+
+      // 낙관적 업데이트: items만 변경하고 status(컬럼 위치)는 유지
+      setTasks((prev) =>
+        prev.map((task) => {
+          if (task.id !== taskId) return task;
+          const updatedItems = task.items.map((item) =>
+            item.id === itemId ? { ...item, checked } : item,
+          );
+          // 현재 컬럼 위치를 localStorage에 고정 (deriveStatus 재계산으로 인한 이동 방지)
+          setStoredStatus(groupId, taskListId, task.status);
+          return { ...task, items: updatedItems };
+        }),
+      );
+
+      try {
+        await updateTask(groupId, taskListId, Number(itemId), { done: checked });
+      } finally {
+        // 성공/실패 관계없이 서버 상태와 동기화
+        await queryClient.invalidateQueries({ queryKey });
+      }
+    },
+    [groupId, today, queryClient],
+  );
 
   // 할 일 목록 추가 모달 열기
   const handleAddTask = useCallback((status: KanbanStatus) => {
@@ -140,44 +170,13 @@ export function useKanbanTasks(
   // 수정 기능은 할 일 목록 상세 페이지에서 처리
   const handleUpdateTask = useCallback(() => {}, []);
 
-  // 드래그로 컬럼 이동 시 컬럼 위치를 저장하고, 완료/할 일 이동 시 API로 완료 상태 동기화
+  // 드래그로 컬럼 이동 시 컬럼 위치만 localStorage에 저장 (체크박스 상태는 변경하지 않음)
   const handleStatusChange = useCallback(
-    async (taskId: string, fromStatus: KanbanStatus, toStatus: KanbanStatus) => {
+    (taskId: string, fromStatus: KanbanStatus, toStatus: KanbanStatus) => {
       if (fromStatus === toStatus) return;
-
-      const task = tasks.find((t) => t.id === taskId);
-      const taskListId = Number(taskId);
-
-      // 항목 유무와 관계없이 컬럼 위치를 localStorage에 저장
-      setStoredStatus(groupId, taskListId, toStatus);
-
-      // 진행중으로 이동하거나 항목이 없으면 API 호출 없이 종료 (위치는 이미 저장됨)
-      if (!task || task.items.length === 0 || toStatus === 'inProgress') return;
-
-      try {
-        if (toStatus === 'done') {
-          // 모든 항목 완료 처리
-          await Promise.all(
-            task.items.map((item) =>
-              updateTask(groupId, taskListId, Number(item.id), { done: true }),
-            ),
-          );
-        } else if (toStatus === 'todo') {
-          // 모든 항목 미완료 처리
-          await Promise.all(
-            task.items.map((item) =>
-              updateTask(groupId, taskListId, Number(item.id), { done: false }),
-            ),
-          );
-        }
-      } finally {
-        // 성공/실패 관계없이 쿼리를 무효화하여 실제 서버 상태로 동기화
-        await queryClient.invalidateQueries({
-          queryKey: taskListKeys.detail(groupId, taskListId, today),
-        });
-      }
+      setStoredStatus(groupId, Number(taskId), toStatus);
     },
-    [tasks, groupId, today, queryClient],
+    [groupId],
   );
 
   return {

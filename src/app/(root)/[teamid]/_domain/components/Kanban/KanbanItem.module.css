@@ -27,6 +27,8 @@
   /* 접힘/펼침 전환 시 타이틀 수평 시프팅 방지: folded 상태와 패딩·보더 두께 통일 */
   padding-left: 20px !important;
   border: 1px solid transparent !important;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 /* 피그마 fold=True 상태: 54px 높이, 좌측 패딩 20px, 테두리만 표시 */

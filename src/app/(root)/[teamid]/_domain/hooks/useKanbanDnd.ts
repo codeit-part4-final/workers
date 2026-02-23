@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import type React from 'react';
 import {
   PointerSensor,
   useSensor,
@@ -12,6 +13,21 @@ import type { KanbanTask, KanbanStatus } from '../interfaces/team';
 // 드래그 시작으로 인식하는 최소 이동 거리(px)
 const DRAG_ACTIVATION_DISTANCE = 8;
 
+// input, label 등 인터랙티브 요소 클릭 시 드래그를 시작하지 않는 커스텀 센서
+class SmartPointerSensor extends PointerSensor {
+  static activators = [
+    {
+      eventName: 'onPointerDown' as const,
+      handler: ({ nativeEvent: event }: React.PointerEvent): boolean => {
+        if (!event.isPrimary || event.button !== 0) return false;
+        const target = event.target as Element;
+        if (target.closest('input, button, a, label, textarea, select')) return false;
+        return true;
+      },
+    },
+  ];
+}
+
 export function useKanbanDnd(
   tasks: KanbanTask[],
   setTasks: React.Dispatch<React.SetStateAction<KanbanTask[]>>,
@@ -21,7 +37,7 @@ export function useKanbanDnd(
   const [activeTask, setActiveTask] = useState<KanbanTask | null>(null);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, {
+    useSensor(SmartPointerSensor, {
       activationConstraint: { distance: DRAG_ACTIVATION_DISTANCE },
     }),
   );
