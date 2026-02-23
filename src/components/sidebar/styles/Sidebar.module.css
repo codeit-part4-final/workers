@@ -17,9 +17,13 @@
   }
 }
 
+<<<<<<< HEAD
 /* position: fixed는 .sidebar에서 이미 설정됨. collapsed 상태에서도 유지 */
-
-.header {
+=======
+.collapsed {
+  /* position: fixed 유지 — 접혀도 오버레이 방식 */
+}
+>>>>>>>origin/main .header {
   display: flex;
   align-items: center;
   justify-content: space-between;
