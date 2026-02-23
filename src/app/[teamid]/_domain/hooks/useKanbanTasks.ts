@@ -140,7 +140,7 @@ export function useKanbanTasks(
   // 수정 기능은 할 일 목록 상세 페이지에서 처리
   const handleUpdateTask = useCallback(() => {}, []);
 
-  // 드래그로 컬럼 이동 시 컬럼 위치를 저장하고, 항목이 있으면 API로 완료 상태도 변경
+  // 드래그로 컬럼 이동 시 컬럼 위치를 저장하고, 완료/할 일 이동 시 API로 완료 상태 동기화
   const handleStatusChange = useCallback(
     async (taskId: string, fromStatus: KanbanStatus, toStatus: KanbanStatus) => {
       if (fromStatus === toStatus) return;
@@ -151,8 +151,8 @@ export function useKanbanTasks(
       // 항목 유무와 관계없이 컬럼 위치를 localStorage에 저장
       setStoredStatus(groupId, taskListId, toStatus);
 
-      // 항목이 없으면 API 호출 없이 종료 (위치는 이미 저장됨)
-      if (!task || task.items.length === 0) return;
+      // 진행중으로 이동하거나 항목이 없으면 API 호출 없이 종료 (위치는 이미 저장됨)
+      if (!task || task.items.length === 0 || toStatus === 'inProgress') return;
 
       try {
         if (toStatus === 'done') {
@@ -169,17 +169,6 @@ export function useKanbanTasks(
               updateTask(groupId, taskListId, Number(item.id), { done: false }),
             ),
           );
-        } else if (toStatus === 'inProgress') {
-          if (fromStatus === 'todo') {
-            // 첫 번째 항목만 완료 처리
-            await updateTask(groupId, taskListId, Number(task.items[0].id), { done: true });
-          } else if (fromStatus === 'done') {
-            // 마지막으로 완료된 항목을 미완료 처리
-            const lastChecked = [...task.items].reverse().find((i) => i.checked);
-            if (lastChecked) {
-              await updateTask(groupId, taskListId, Number(lastChecked.id), { done: false });
-            }
-          }
         }
       } finally {
         // 성공/실패 관계없이 쿼리를 무효화하여 실제 서버 상태로 동기화
