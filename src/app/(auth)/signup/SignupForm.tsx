@@ -40,7 +40,7 @@ export default function SignupForm() {
         return;
       }
 
-      // 가입 완료 시 팀이 없는 상태이므로 팀 생성/참여 페이지로 이동
+      // 신규 가입자는 소속 팀이 없으므로 무조건 팀 생성/참여 페이지로 이동
       router.push('/addteam');
     } catch {
       setError('root', { message: '네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
