@@ -1,12 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import JoinTeamCard from '../_domain/components/JoinTeamCard';
 import { useJoinTeam } from '../_domain/hooks/useJoinTeam';
 import type { CreateTeamFeedback } from '../_domain/interfaces/feedback';
 
-export default function JoinTeamPage() {
+function JoinTeamPageContent() {
   const searchParams = useSearchParams();
   // 초대 링크로 직접 접근 시 URL의 현재 주소를 입력값으로 자동 설정
   const [teamLink, setTeamLink] = useState(() => {
@@ -44,5 +44,13 @@ export default function JoinTeamPage() {
       onTeamLinkChange={handleTeamLinkChange}
       onSubmit={handleSubmit}
     />
+  );
+}
+
+export default function JoinTeamPage() {
+  return (
+    <Suspense>
+      <JoinTeamPageContent />
+    </Suspense>
   );
 }
