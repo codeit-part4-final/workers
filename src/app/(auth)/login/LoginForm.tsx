@@ -10,7 +10,7 @@ import { Input } from '@/components/input';
 import { PasswordInput } from '@/components/input';
 import BaseButton from '@/components/Button/base/BaseButton';
 import ResetPassword from '@/components/Modal/domain/components/ResetPassword/ResetPassword';
-import Toast from '@/components/toast/Toast';
+import LinkPassToast from '@/components/toast/LinkPassToast';
 import kakaotalkButton from '@/assets/buttons/kakao/kakaotalkButton.svg';
 import { loginSchema, type LoginFormValues } from './schema';
 import styles from './LoginForm.module.css';
@@ -21,6 +21,7 @@ export default function LoginForm() {
   const [isResetModalOpen, setIsResetModalOpen] = useState(false);
   const [resetEmail, setResetEmail] = useState('');
   const [isToastOpen, setIsToastOpen] = useState(false);
+  // 임시: autoDismissMs를 매우 크게 줘서 사라지지 않게 함
 
   const {
     register,
@@ -47,7 +48,13 @@ export default function LoginForm() {
         return;
       }
 
-      router.push('/');
+      const { user } = await response.json();
+      // 소속 팀이 있으면 해당 팀 페이지로, 없으면 팀 추가 페이지로
+      if (user?.teamId) {
+        router.push(`/${user.teamId}`);
+      } else {
+        router.push('/addteam');
+      }
       router.refresh();
     } catch {
       setError('email', { message: '네트워크 오류가 발생했습니다. 잠시 후 다시 시도해주세요.' });
@@ -132,7 +139,9 @@ export default function LoginForm() {
             type="button"
             className={styles.kakaoButton}
             aria-label="카카오톡으로 로그인"
-            disabled
+            onClick={() => {
+              window.location.href = '/api/auth/kakao';
+            }}
           >
             <Image src={kakaotalkButton} alt="카카오톡 로그인" width={42} height={42} />
           </button>
@@ -155,12 +164,7 @@ export default function LoginForm() {
       />
 
       {/* 비밀번호 재설정 이메일 전송 완료 토스트 */}
-      <Toast
-        isOpen={isToastOpen}
-        message="비밀번호 재설정 이메일을 전송했습니다."
-        onDismiss={() => setIsToastOpen(false)}
-        actionLabel={undefined}
-      />
+      <LinkPassToast isOpen={isToastOpen} onDismiss={() => setIsToastOpen(false)} />
     </>
   );
 }
