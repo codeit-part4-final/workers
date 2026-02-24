@@ -32,6 +32,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const isLanding = pathname === '/';
   const firstGroup = user?.memberships?.[0]?.group;
 
+  // [teamid] 페이지는 자체 모바일 헤더(TeamNavClient)를 사용하므로 root layout의 MobileHeader를 숨김
+  const knownPaths = ['/', '/addteam', '/boards', '/mypage', '/history', '/list'];
+  const isTeamIdPage = !knownPaths.some((p) => pathname === p || pathname.startsWith(p + '/'));
+
   const handleProfileClick = () => {
     if (isLoggedIn) {
       router.push('/mypage');
@@ -139,33 +143,35 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             : undefined
         }
       />
-      <MobileHeader
-        isLoggedIn={isLoggedIn}
-        onLogoClick={() => router.push('/addteam')}
-        profileImage={
-          user?.image ? (
-            <Image
-              src={user.image}
-              alt=""
-              width={32}
-              height={32}
-              style={{ borderRadius: 8, objectFit: 'cover' }}
+      {!isTeamIdPage && (
+        <>
+          <MobileHeader
+            isLoggedIn={isLoggedIn}
+            profileImage={
+              user?.image ? (
+                <Image
+                  src={user.image}
+                  alt=""
+                  width={32}
+                  height={32}
+                  style={{ borderRadius: 8, objectFit: 'cover' }}
+                />
+              ) : undefined
+            }
+            onMenuClick={() => setIsDrawerOpen(true)}
+            onProfileClick={handleProfileClick}
+          />
+          <MobileDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+            <SidebarButton
+              icon={<Image src={boardSmall} alt="" width={20} height={20} />}
+              label="자유게시판"
+              isActive
+              href="/boards"
+              onClick={() => setIsDrawerOpen(false)}
             />
-          ) : undefined
-        }
-        onMenuClick={() => setIsDrawerOpen(true)}
-        onProfileClick={handleProfileClick}
-        onLogout={handleLogout}
-      />
-      <MobileDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-        <SidebarButton
-          icon={<Image src={boardSmall} alt="" width={20} height={20} />}
-          label="자유게시판"
-          isActive
-          href="/boards"
-          onClick={() => setIsDrawerOpen(false)}
-        />
-      </MobileDrawer>
+          </MobileDrawer>
+        </>
+      )}
       <main className={styles.main}>{children}</main>
     </div>
   );
