@@ -8,6 +8,22 @@ const nextConfig: NextConfig = {
         hostname: 'sprint-fe-project.s3.ap-northeast-2.amazonaws.com',
         pathname: '/Coworkers/**',
       },
+      {
+        protocol: 'https',
+        hostname: '**.kakaocdn.net',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.kakaocdn.net',
+      },
+      {
+        protocol: 'https',
+        hostname: '**.kakao.com',
+      },
+      {
+        protocol: 'http',
+        hostname: '**.kakao.com',
+      },
     ],
   },
   async headers() {
