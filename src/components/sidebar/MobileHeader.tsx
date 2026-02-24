@@ -5,7 +5,6 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import clsx from 'clsx';
 import MobileDrawer from './MobileDrawer';
-import TeamSidebarDropdown from '@/app/(root)/[teamid]/_domain/components/Team/TeamSidebarDropdown';
 
 import styles from './styles/MobileHeader.module.css';
 import logoSmall from '@/assets/logos/logoSmall.svg';
@@ -20,7 +19,7 @@ type MobileHeaderProps = {
   profileImage?: ReactNode;
   /** @deprecated 내부 드로어로 대체됨. 호환성을 위해 유지 */
   onMenuClick?: () => void;
-  /** 드로어 내부 콘텐츠 (미전달 시 TeamSidebarDropdown 기본 표시) */
+  /** 드로어 내부 콘텐츠 (전달 시 햄버거 메뉴 클릭으로 드로어 표시) */
   drawerContent?: ReactNode;
   /** 프로필 버튼 클릭 시 호출되는 콜백 */
   onProfileClick?: () => void;
@@ -133,9 +132,11 @@ export default function MobileHeader({
           </div>
         )}
       </div>
-      <MobileDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
-        {drawerContent ?? <TeamSidebarDropdown />}
-      </MobileDrawer>
+      {drawerContent && (
+        <MobileDrawer isOpen={isDrawerOpen} onClose={() => setIsDrawerOpen(false)}>
+          {drawerContent}
+        </MobileDrawer>
+      )}
     </header>
   );
 }

@@ -19,9 +19,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const isLoggedIn = !isPending && user !== null && user !== undefined;
   const isLanding = pathname === '/';
 
-  // [teamid] 페이지는 자체 모바일 헤더(TeamNavClient)를 사용하므로 root layout의 MobileHeader를 숨김
-  const knownPaths = ['/', '/addteam', '/boards', '/mypage', '/history', '/list'];
-  const isTeamIdPage = !knownPaths.some((p) => pathname === p || pathname.startsWith(p + '/'));
+  // 자체 사이드바가 없는 페이지에서만 root layout 사이드바 표시
+  const rootSidebarPaths = ['/', '/boards', '/mypage'];
+  const showRootSidebar = rootSidebarPaths.some(
+    (p) => pathname === p || pathname.startsWith(p + '/'),
+  );
 
   const handleProfileClick = () => {
     if (isLoggedIn) {
@@ -38,34 +40,36 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   return (
     <div className={styles.layout}>
-      <Sidebar
-        defaultCollapsed={isLanding}
-        isLoggedIn={isLoggedIn}
-        onProfileClick={handleProfileClick}
-        onLogout={handleLogout}
-        onLogoClick={() => router.push('/addteam')}
-        profileImage={
-          user?.image ? (
-            <Image
-              src={user.image}
-              alt=""
-              width={40}
-              height={40}
-              style={{ borderRadius: 12, objectFit: 'cover' }}
-            />
-          ) : (
-            <Image src={humanBig} alt="" width={40} height={40} />
-          )
-        }
-        profileName={user?.nickname ?? '사용자'}
-        profileTeam={user?.memberships?.[0]?.group?.name ?? ''}
-        teamSelect={
-          isLoggedIn
-            ? (isCollapsed: boolean) => <TeamSidebarDropdown isCollapsed={isCollapsed} />
-            : undefined
-        }
-      />
-      {!isTeamIdPage && (
+      {showRootSidebar && (
+        <Sidebar
+          defaultCollapsed={isLanding}
+          isLoggedIn={isLoggedIn}
+          onProfileClick={handleProfileClick}
+          onLogout={handleLogout}
+          onLogoClick={() => router.push('/addteam')}
+          profileImage={
+            user?.image ? (
+              <Image
+                src={user.image}
+                alt=""
+                width={40}
+                height={40}
+                style={{ borderRadius: 12, objectFit: 'cover' }}
+              />
+            ) : (
+              <Image src={humanBig} alt="" width={40} height={40} />
+            )
+          }
+          profileName={user?.nickname ?? '사용자'}
+          profileTeam={user?.memberships?.[0]?.group?.name ?? ''}
+          teamSelect={
+            isLoggedIn
+              ? (isCollapsed: boolean) => <TeamSidebarDropdown isCollapsed={isCollapsed} />
+              : undefined
+          }
+        />
+      )}
+      {showRootSidebar && (
         <MobileHeader
           isLoggedIn={isLoggedIn}
           profileImage={
@@ -81,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }
           onProfileClick={handleProfileClick}
           onLogout={handleLogout}
+          drawerContent={<TeamSidebarDropdown />}
         />
       )}
       <main className={styles.main}>{children}</main>
