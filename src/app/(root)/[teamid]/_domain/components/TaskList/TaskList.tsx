@@ -98,7 +98,7 @@ function formatYearMonth(date: Date) {
   return `${date.getFullYear()}년 ${date.getMonth() + 1}월`;
 }
 
-// ✅ 주 단위 이동용
+//  주 단위 이동용
 function addDays(base: Date, diff: number) {
   const d = new Date(base);
   d.setDate(d.getDate() + diff);
@@ -215,7 +215,7 @@ type TodoCardData = {
 };
 
 /**
- * ✅ 서버 스웨거: weekDays는 string[]이 아니라 number[]
+ *  서버 스웨거: weekDays는 string[]이 아니라 number[]
  * Monday=0 ~ Sunday=6 로 보냄
  */
 type ApiWeekDayNum = 0 | 1 | 2 | 3 | 4 | 5 | 6;
@@ -599,15 +599,15 @@ export default function List() {
 
     const rawRepeatDays = (payload as unknown as { repeatDays?: unknown }).repeatDays;
 
-    // ✅ WEEKLY: number[]
+    //  WEEKLY: number[]
     const weekDays = freq === 'WEEKLY' ? toApiWeekDayNums(rawRepeatDays) : undefined;
 
-    // ✅ MONTHLY: monthDay 필요
+    //  MONTHLY: monthDay 필요
     const monthDay = freq === 'MONTHLY' ? start.getDate() : undefined;
 
     const startIso = toIsoWithOffset(start);
 
-    // ✅ CREATE는 /recurring 로 보냄(신규 API)
+    //  CREATE는 /recurring 로 보냄(신규 API)
     if (!taskEditTarget) {
       await createTask.mutateAsync({
         groupId: activeGroupId,
@@ -626,7 +626,7 @@ export default function List() {
       return;
     }
 
-    // ✅ EDIT: recurringId 있으면 recurring 수정, 없으면 task PATCH
+    //  EDIT: recurringId 있으면 recurring 수정, 없으면 task PATCH
     await patchTask.mutateAsync({
       groupId: activeGroupId,
       taskListId: selectedTaskListId,
@@ -703,7 +703,7 @@ export default function List() {
     setSelectedTaskIdState(undefined);
   };
 
-  // ✅ Detail Overlay
+  //  Detail Overlay
   const [detailMounted, setDetailMounted] = useState(false);
   const [detailOpen, setDetailOpen] = useState(false);
 
@@ -745,7 +745,7 @@ export default function List() {
   const handleToggleDone = async (taskId: number, nextDone: boolean) => {
     if (!activeGroupId || !selectedTaskListId) return;
 
-    // ✅ doneAt은 task PATCH로만 처리(반복/비반복 공통)
+    //  doneAt은 task PATCH로만 처리(반복/비반복 공통)
     await patchTask.mutateAsync({
       groupId: activeGroupId,
       taskListId: selectedTaskListId,
@@ -1082,7 +1082,7 @@ export default function List() {
                   <div className={styles.panelControls}>
                     <span className={styles.yearMonth}>{formatYearMonth(viewDate)}</span>
 
-                    {/* ✅ 주 단위 이동 */}
+                    {/*  주 단위 이동 */}
                     <div className={styles.arrowGroup}>
                       <ArrowButton
                         size="small"
@@ -1116,7 +1116,7 @@ export default function List() {
                             onChange={(v) => {
                               if (v) {
                                 setSelectedDate(v);
-                                setViewDate(v); // ✅ 달력 선택 시 viewDate도 동기화
+                                setViewDate(v); //  달력 선택 시 viewDate도 동기화
                               }
                               closeCalendar();
                             }}
@@ -1133,7 +1133,7 @@ export default function List() {
                     value={selectedDate}
                     onChange={(next) => {
                       setSelectedDate(next);
-                      setViewDate(next); // ✅ 주바 선택 시 viewDate도 동기화
+                      setViewDate(next); //  주바 선택 시 viewDate도 동기화
                     }}
                   />
                 </div>

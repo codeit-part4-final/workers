@@ -25,7 +25,7 @@
   }
 }
 
-/* ✅ TeamHeader: PC에서만 가운데 정렬 */
+/* TeamHeader: PC에서만 가운데 정렬 */
 @media (min-width: 1025px) {
   :global(.TeamHeader-module__H3kcRq__container) {
     width: 100%;
@@ -51,7 +51,7 @@
   min-height: 100%;
 }
 
-/* ✅ 사이드바 접힘시 잘림(닫기 버튼) 해결: aside는 visible, 내용 영역만 hidden */
+/*  사이드바 접힘시 잘림(닫기 버튼) 해결: aside는 visible, 내용 영역만 hidden */
 :global([class*='Sidebar-module__'][class*='sidebar']) {
   overflow: visible !important;
 }
@@ -73,7 +73,7 @@
   display: none;
 }
 
-/* ✅ 1024px 이상에서는 데스크탑 Sidebar가 보이도록 강제 */
+/*  1024px 이상에서는 데스크탑 Sidebar가 보이도록 강제 */
 @media (min-width: 1024px) and (max-width: 1199px) {
   .desktopSidebar {
     display: flex !important;
@@ -320,7 +320,7 @@
   color: #64748b;
 }
 
-/* ✅ 모바일/태블릿: 투두카드 폭 고정 */
+/*  모바일/태블릿: 투두카드 폭 고정 */
 @media (max-width: 1024px) {
   .mobileTodoRow {
     display: flex !important;
@@ -654,7 +654,7 @@
   padding: 28px;
 }
 
-/* ✅ TaskDetailCard header 레이아웃 */
+/*  TaskDetailCard header 레이아웃 */
 .detailOverlay :global([class*='TaskDetailCard-module__'][class*='header']) {
   display: grid !important;
   grid-template-columns: 1fr auto !important;
@@ -692,13 +692,13 @@
   }
 }
 
-/* ✅ 완료 시 TaskDetailCard title 줄+톤다운 (TaskDetailCard 안 건드림) */
+/* 완료 시 TaskDetailCard title 줄+톤다운 (TaskDetailCard 안 건드림) */
 .detailInner[data-done='true'] :global([class*='TaskDetailCard-module__'][class*='title']) {
   text-decoration: line-through !important;
   opacity: 0.45 !important;
 }
 
-/* ✅ 모바일/태블릿: 애니메이션 제거 + 전체 화면 */
+/*  모바일/태블릿: 애니메이션 제거 + 전체 화면 */
 @media (max-width: 1024px) {
   .detailOverlay {
     left: 0;
@@ -734,7 +734,7 @@
   }
 }
 
-/* ✅ dropdown option disabled 스타일 */
+/*  dropdown option disabled 스타일 */
 .todoListOption:disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -830,7 +830,7 @@
   }
 }
 
-/* ✅ calendar popover */
+/* calendar popover */
 .calendarPopover {
   position: absolute;
   top: 44px;
@@ -843,7 +843,7 @@
   padding: 10px;
 }
 
-/* ✅ 모바일/태블릿: 케밥 "버튼은 유지", 아이콘만 숨김 (드롭다운은 클릭으로 뜸) */
+/*  모바일/태블릿: 케밥 "버튼은 유지", 아이콘만 숨김 (드롭다운은 클릭으로 뜸) */
 @media (max-width: 1024px) {
   /* TodoCard / TaskListItem 케밥 버튼 내부의 svg/img만 투명 */
   :global([class*='TodoCard-module__'] svg),

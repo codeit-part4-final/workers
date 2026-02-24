@@ -147,7 +147,7 @@ export type Task = {
   frequencyType?: ApiFrequency;
   repeatType?: ApiFrequency;
 
-  /** ✅ 서버는 number[] */
+  /** 서버는 number[] */
   weekDays?: number[];
   repeatWeekDays?: number[];
   repeatDays?: unknown;
@@ -158,7 +158,7 @@ export type Task = {
   commentCount: number;
   writer?: TaskWriter;
 
-  /** ✅ 반복 task면 존재 */
+  /** 반복 task면 존재 */
   recurringId?: number;
 };
 
@@ -326,7 +326,7 @@ export function useDeleteTaskList(teamId: string) {
 }
 
 /**
- * ✅ (반복) 생성은 신규 API: /recurring
+ *  (반복) 생성은 신규 API: /recurring
  * - WEEKLY: weekDays number[]
  * - MONTHLY: monthDay 필수
  */
@@ -344,7 +344,7 @@ export function useCreateTask(teamId: string) {
       weekDays?: number[];
       monthDay?: number;
     }) => {
-      // ✅ 신규 recurring
+      // 신규 recurring
       return fetchJson<unknown>(
         teamId,
         `groups/${vars.groupId}/task-lists/${vars.taskListId}/recurring`,
@@ -372,7 +372,7 @@ export function useCreateTask(teamId: string) {
 }
 
 /**
- * ✅ 수정:
+ * 수정:
  * - recurringId 있으면: /recurring/{recurringId}
  * - 없으면: /tasks/{taskId} (일반 task 수정/완료체크)
  */
@@ -397,7 +397,7 @@ export function usePatchTask(teamId: string) {
     }) => {
       const isDonePatchOnly = Object.keys(vars.body).length === 1 && 'doneAt' in vars.body;
 
-      // ✅ doneAt은 무조건 tasks PATCH
+      // doneAt은 무조건 tasks PATCH
       if (isDonePatchOnly) {
         return fetchJson<Task>(
           teamId,
@@ -407,7 +407,7 @@ export function usePatchTask(teamId: string) {
         );
       }
 
-      // ✅ recurring 수정
+      // recurring 수정
       if (vars.recurringId) {
         return fetchJson<unknown>(
           teamId,
@@ -417,7 +417,7 @@ export function usePatchTask(teamId: string) {
         );
       }
 
-      // ✅ 일반 task 수정
+      // 일반 task 수정
       return fetchJson<Task>(
         teamId,
         `groups/${vars.groupId}/task-lists/${vars.taskListId}/tasks/${vars.taskId}`,
@@ -436,7 +436,7 @@ export function usePatchTask(teamId: string) {
 }
 
 /**
- * ✅ 삭제:
+ * 삭제:
  * - recurringId 있으면: /tasks/{taskId}/recurring/{recurringId}
  * - 없으면: /tasks/{taskId}
  */
