@@ -10,6 +10,11 @@ export default function SidebarWrapper() {
   const { data: currentUser } = useCurrentUserQuery();
   const router = useRouter();
 
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
+
   return (
     <Sidebar
       teamSelect={(isCollapsed) => <TeamSidebarDropdown isCollapsed={isCollapsed} />}
@@ -20,6 +25,7 @@ export default function SidebarWrapper() {
       profileName={currentUser?.nickname}
       profileTeam={currentUser?.email}
       onProfileClick={() => router.push('/mypage')}
+      onLogout={handleLogout}
     />
   );
 }

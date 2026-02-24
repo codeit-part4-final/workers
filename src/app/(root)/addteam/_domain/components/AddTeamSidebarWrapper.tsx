@@ -9,6 +9,11 @@ export default function AddTeamSidebarWrapper() {
   const { data: currentUser } = useCurrentUserQuery();
   const router = useRouter();
 
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
+
   return (
     <Sidebar
       isLoggedIn={!!currentUser}
@@ -18,6 +23,7 @@ export default function AddTeamSidebarWrapper() {
       profileName={currentUser?.nickname}
       profileTeam={currentUser?.email}
       onProfileClick={() => router.push('/mypage')}
+      onLogout={handleLogout}
     />
   );
 }

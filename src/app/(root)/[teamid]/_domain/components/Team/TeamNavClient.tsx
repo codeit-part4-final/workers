@@ -18,6 +18,10 @@ export default function TeamNavClient() {
   const openDrawer = () => setIsDrawerOpen(true);
   const closeDrawer = () => setIsDrawerOpen(false);
   const handleProfileClick = () => router.push('/mypage');
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
 
   return (
     <>
@@ -35,6 +39,7 @@ export default function TeamNavClient() {
           }
           onMenuClick={openDrawer}
           onProfileClick={handleProfileClick}
+          onLogout={handleLogout}
         />
       </div>
 
