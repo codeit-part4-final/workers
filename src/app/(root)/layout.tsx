@@ -44,12 +44,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     }
   };
 
+  const handleLogout = async () => {
+    await fetch('/api/auth/logout', { method: 'POST' });
+    router.push('/login');
+  };
+
   return (
     <div className={styles.layout}>
       <Sidebar
         defaultCollapsed={isLanding}
         isLoggedIn={isLoggedIn}
         onProfileClick={handleProfileClick}
+        onLogout={handleLogout}
+        onLogoClick={() => router.push('/addteam')}
         profileImage={
           user?.image ? (
             <Image
@@ -84,6 +91,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 }
                 label={firstGroup.name}
                 isSelected
+                onClick={() => router.push(`/${firstGroup.id}`)}
               />
             ) : (
               <SidebarButton
@@ -103,6 +111,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 label={firstGroup.name}
                 isActive
                 iconOnly
+                onClick={() => router.push(`/${firstGroup.id}`)}
               />
             )
           ) : null
@@ -111,7 +120,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           isLoggedIn
             ? (isCollapsed: boolean) => (
                 <>
-                  {!isCollapsed && <SidebarAddButton label="팀 추가하기" onClick={() => {}} />}
+                  {!isCollapsed && (
+                    <SidebarAddButton label="팀 추가하기" onClick={() => router.push('/addteam')} />
+                  )}
                   <hr style={{ border: 'none', borderTop: '1px solid #e2e8f0', margin: '8px 0' }} />
                   <SidebarButton
                     icon={
