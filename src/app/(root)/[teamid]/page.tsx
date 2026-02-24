@@ -1,9 +1,5 @@
 import type { Metadata } from 'next';
-import dynamic from 'next/dynamic';
-
-const TeamDashboard = dynamic(() => import('./_domain/components/Team/TeamDashboard'), {
-  ssr: false,
-});
+import TeamDashboardClient from './_domain/components/Team/TeamDashboardClient';
 
 export const metadata: Metadata = {
   title: 'Coworkers — 팀 대시보드',
@@ -21,5 +17,5 @@ export const metadata: Metadata = {
 };
 
 export default function TeamPage({ params }: { params: { teamid: string } }) {
-  return <TeamDashboard key={params.teamid} />;
+  return <TeamDashboardClient teamid={params.teamid} />;
 }
