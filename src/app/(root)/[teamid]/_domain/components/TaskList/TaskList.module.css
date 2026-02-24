@@ -14,7 +14,7 @@
   overflow-x: hidden;
 }
 
-/* ✅ TeamHeader 패딩 wrapper (모바일/태블릿만) */
+/*  TeamHeader 패딩 wrapper (모바일/태블릿만) */
 .teamHeaderPad {
   padding: 0;
 }
@@ -106,7 +106,7 @@
   flex: 1;
   display: flex;
   justify-content: center;
-  padding: 120px 85px 80px 67px;
+  padding: 120px 85px 80px 0px;
   background: var(--color-background-secondary, #f5f6f8);
   box-sizing: border-box;
   min-height: 100dvh;
@@ -154,6 +154,7 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+  cursor: pointer;
 }
 
 .todoCardWrap {

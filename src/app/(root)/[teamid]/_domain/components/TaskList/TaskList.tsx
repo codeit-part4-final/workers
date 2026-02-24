@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { useQueryClient } from '@tanstack/react-query';
 import { useParams, useRouter } from 'next/navigation';
 
-import styles from './List.module.css';
+import styles from './TaskList.module.css';
 
 import {
   type ApiFrequency,
@@ -381,7 +381,7 @@ export default function List() {
   const router = useRouter();
   const qc = useQueryClient();
 
-  // ✅ [teamid] 라우트에서 teamId 받음
+  //  [teamid] 라우트에서 teamId 받음
   const params = useParams<{ teamid?: string }>();
   const teamId = String(params?.teamid ?? '').trim();
 
