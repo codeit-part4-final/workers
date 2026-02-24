@@ -105,7 +105,7 @@ function KanbanItem({
     >
       <div
         ref={containerRef}
-        className={`${styles.cardWrapper} ${isDragging ? styles.cardWrapperDragging : ''}`}
+        className={`${styles.cardWrapper} ${isDragging ? styles.cardWrapperDragging : ''} ${task.pending ? styles.cardPending : ''}`}
       >
         {isEditing ? (
           <div className={styles.editCard}>

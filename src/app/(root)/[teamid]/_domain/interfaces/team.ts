@@ -18,6 +18,8 @@ export interface KanbanTask {
   title: string;
   items: TaskItem[];
   status: KanbanStatus;
+  /** 서버 요청 진행 중 여부 (Soft Optimistic UI용) */
+  pending?: boolean;
 }
 
 export interface MockTeam {

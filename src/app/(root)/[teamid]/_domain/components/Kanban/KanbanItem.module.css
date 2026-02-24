@@ -8,6 +8,13 @@
 
 .cardWrapper {
   position: relative;
+  transition: opacity 0.15s;
+}
+
+/* 서버 요청 진행 중: 카드를 흐리게 표시하고 추가 인터랙션 차단 */
+.cardPending {
+  opacity: 0.5;
+  pointer-events: none;
 }
 
 /* 드래그 중인 아이템: TodoCard와 동일한 border-radius(12px)로 테두리 플레이스홀더 표시 */

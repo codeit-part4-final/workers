@@ -131,9 +131,18 @@ export function useKanbanTasks(
         }),
       );
 
+      // 2초 이상 응답이 없을 때만 pending 표시 (빠른 응답 시 깜빡임 방지)
+      const pendingTimer = window.setTimeout(() => {
+        setTasks((prev) =>
+          prev.map((task) => (task.id === taskId ? { ...task, pending: true } : task)),
+        );
+      }, 2000);
+
       try {
         await updateTask(groupId, taskListId, Number(itemId), { done: checked });
       } finally {
+        // 타이머가 남아있으면 취소 (pending 노출 전에 완료된 경우)
+        clearTimeout(pendingTimer);
         // 성공/실패 관계없이 서버 상태와 동기화
         await queryClient.invalidateQueries({ queryKey });
       }
