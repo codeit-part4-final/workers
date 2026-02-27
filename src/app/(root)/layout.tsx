@@ -36,7 +36,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   };
 
   const handleLogout = async () => {
-    await fetch('/api/auth/logout', { method: 'POST' });
+    try {
+      await fetch('/api/auth/logout', { method: 'POST' });
+    } catch (error) {
+      console.error('로그아웃 API 호출 실패:', error);
+    }
     queryClient.clear();
     router.push('/login');
   };
