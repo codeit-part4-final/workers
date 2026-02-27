@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
+import { useQueryClient } from '@tanstack/react-query';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { Sidebar, MobileHeader } from '@/components/sidebar';
 import TeamSidebarDropdown from './[teamid]/_domain/components/Team/TeamSidebarDropdown';
@@ -11,6 +12,7 @@ import styles from './layout.module.css';
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { data: user, isPending } = useCurrentUser();
 
   // isPending: 최초 로딩 중 (undefined)
@@ -35,6 +37,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
   const handleLogout = async () => {
     await fetch('/api/auth/logout', { method: 'POST' });
+    queryClient.clear();
     router.push('/login');
   };
 
